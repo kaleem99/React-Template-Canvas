@@ -19,7 +19,7 @@
 .ImageDiv2 {
   margin-left: auto;
   margin-right: 5px;
-  width: 50px;
+  text-align: right;
 }
 .TextBlock {
   text-align: center;
@@ -123,8 +123,17 @@ p {
   margin-bottom: 10px;
 }
 
-
-.copyTextButton{
+.copyTextButton {
   margin: auto;
   text-align: center;
+}
+.input1 {
+  width: 300px;
+  height: 25px;
+  margin-top: 5px;
+}
+.input2 {
+  width: 300px;
+  height: 25px;
+  margin-top: 5px;
 }

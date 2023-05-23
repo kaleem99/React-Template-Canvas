@@ -3,29 +3,42 @@ import "./App.css";
 import { useState } from "react";
 import exportedHtml from "./exportedHTML";
 // import { writeJsonFile } from "write-json-file";
+// import { writeJsonFile } from "write-json-file";
+
 function App() {
   const [text, setText] = useState("Enter Text here.");
   const [text2, setText2] = useState("Enter Text here.");
+  const [logo1, setLogo1] = useState("");
+  const [logo2, setLogo2] = useState("");
+
   const [videoLink, setVideoLink] = useState("Video Url Link");
   const [code, setCode] = useState("");
   const [showPopup, setShowPopup] = useState(false);
 
   const writeToFile = async () => {
-    const result = exportedHtml(text, text2, videoLink);
+    const result = exportedHtml(text, text2, videoLink, logo1, logo2);
 
     localStorage.setItem("html", JSON.stringify({ text: result }));
   };
+  // const test = async () => {
+  //   await writeJsonFile("foo.json", { foo: true });
+  // };
   const getData = () => {
     let data = localStorage.getItem("html", JSON);
     console.log(data);
     data = JSON.parse(data);
-    let title = "";
+    // let title = "";
     let courseID = "3413";
     console.log(data.text);
     setCode(data.text);
-    let url = `POST /api/v1/courses/:${courseID}/pages`;
-    let apiKey =
-      "20171~jYdCiwFisd1kJkLd8LuVui5iplxYE0pcHPw1H1JneIZ0cMLvYKzdUrLDmlHqNYcp";
+    fetch("/templates", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: data.text }),
+    });
+    // let url = `POST /api/v1/courses/:${courseID}/pages`;
+    // let apiKey =
+    //   "20171~jYdCiwFisd1kJkLd8LuVui5iplxYE0pcHPw1H1JneIZ0cMLvYKzdUrLDmlHqNYcp";
 
     // const requestOptions = {
     //   method: "PUT",
@@ -95,6 +108,18 @@ function App() {
     var tooltip = document.getElementById("myTooltip");
     tooltip.innerHTML = "Copy to clipboard";
   }
+  const fetchData = () => {
+    fetch("/templates", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <div
       className="App"
@@ -108,6 +133,7 @@ function App() {
         <button className="btn" onClick={() => getData()}>
           Export
         </button>
+        <button onClick={() => fetchData()}>Fetch data</button>
       </div>
       <div className="generatedCode">
         <h2 style={{ color: "white", textAlign: "center" }}>Generated Code</h2>
@@ -120,7 +146,9 @@ function App() {
           <br></br>
           {showPopup && <span className="popup">Code Copied.</span>}
           <br></br>
-          <button className="copyTextButton" onClick={() => copyToClipBoard()}>Copy to clipboard</button>
+          <button className="copyTextButton" onClick={() => copyToClipBoard()}>
+            Copy to clipboard
+          </button>
         </div>
       </div>
       <div
@@ -143,11 +171,11 @@ function App() {
             className="ImageDiv"
             style={{ marginLeft: "5px", marginRight: "auto", width: "50px" }}
           >
-            <img
-              alt=""
-              className="HeaderImage"
-              style={{ width: "50px", height: "50px" }}
-              src="https://kaleem99.github.io/hostingContents/image-logo%402x.png"
+            <input
+              value={logo1}
+              onChange={(e) => setLogo1(e.target.value)}
+              placeholder="Enter image logo url"
+              className="input1"
             />
           </div>
         </div>
@@ -226,16 +254,22 @@ function App() {
               <div
                 className="ImageDiv2"
                 style={{
-                  marginLeft: "auto",
-                  marginRight: "5px",
-                  width: "50px",
+                  // marginLeft: "auto",
+                  // marginRight: "5px",
+                  width: "auto",
                 }}
               >
-                <img
+                {/* <img
                   className="FooterImage"
                   style={{ width: "50px", height: "50px" }}
                   alt=""
                   src="https://kaleem99.github.io/hostingContents/image-logo%402x.png"
+                /> */}
+                <input
+                  value={logo2}
+                  onChange={(e) => setLogo2(e.target.value)}
+                  placeholder="Enter image logo url"
+                  className="input2"
                 />
               </div>
             </div>
@@ -248,4 +282,5 @@ function App() {
 
 export default App;
 
-// curl -X PUT -H 'Authorization: Bearer 20171~T2LaAiSlnq9MTHefHK5Vl2B8vSWkHWrBpMRGQH8DWo4NbDbTG5nzxxfnAUBnEpPX' https://digitalcampus.beta.instructure.com/api/v1/courses/214/pages/New%20Page%20API%20Test -d wiki_page[body]=%3Ch1%3EHello%2C%20world%21%3C%2Fh1%3E
+// curl -X PUT -H 'Authorization: Bearer 20171~jYdCiwFisd1kJkLd8LuVui5iplxYE0pcHPw1H1JneIZ0cMLvYKzdUrLDmlHqNYcp' https://digitalcampus.beta.instructure.com/api/v1/courses/214/pages/New%20Page%20API%20Test -d wiki_page[body]=%3Cdiv%3E%0A%3Ch1%3ENew%20Course%20Heading%3C/h1%3E%0A%3Cbr%3E%3C/br%3E%0A%3Cbody%3E%0A%20%20Lorem%20Ipsum%20is%20simply%20dummy%20text%20of%20the%20printing%20and%20typesetting%20industry.%0A%3C/body%3E%0A%3C/div%3E
+// curl -X GET -H 'Authorization: Bearer 20171~jYdCiwFisd1kJkLd8LuVui5iplxYE0pcHPw1H1JneIZ0cMLvYKzdUrLDmlHqNYcp' https://digitalcampus.beta.instructure.com/api/v1/courses/214/pages/New%20Page%20API%20Test

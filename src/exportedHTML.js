@@ -1,4 +1,4 @@
-const exportedHtml = (text, text2, videoLink) => {
+const exportedHtml = (text, text2, videoLink, logo1, logo2) => {
   let result = `<div
     class="Container"
     id="container"
@@ -23,7 +23,7 @@ const exportedHtml = (text, text2, videoLink) => {
           alt=""
           class="HeaderImage"
           style="width: 50px; height: 50px"
-          src="https://kaleem99.github.io/hostingContents/image-logo%402x.png"
+          src="${logo1}"
         />
       </div>
     </div>
@@ -74,6 +74,9 @@ const exportedHtml = (text, text2, videoLink) => {
           <iframe
             style="width: 60%; height: 250px; border: none; border: 0; margin-bottom: 5px;"
             src="${videoLink}"
+            allowfullscreen
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+
           ></iframe>
         </div>
         <div
@@ -94,7 +97,7 @@ const exportedHtml = (text, text2, videoLink) => {
               class="FooterImage"
               style="width: 50px; height: 50px"
               alt=""
-              src="https://kaleem99.github.io/hostingContents/image-logo%402x.png"
+              src="${logo2}"
             />
           </div>
         </div>
@@ -104,5 +107,8 @@ const exportedHtml = (text, text2, videoLink) => {
   `;
   return result;
 };
+
+
+// Add Text
 
 export default exportedHtml;
