@@ -137,3 +137,7 @@ p {
   height: 25px;
   margin-top: 5px;
 }
+.active {
+  background-color: #1176d3;
+  color: white;
+}
