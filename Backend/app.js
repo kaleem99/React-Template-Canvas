@@ -45,30 +45,27 @@ app.get("/", (req, res) => {
 app.post("/templates", async (req, res) => {
   // console.log(JSON.stringify(req.body.data));
   console.log(encodeURI(req.body.data));
-  const testingPost = async () => {
-    try {
-      const newData = encodeURI(req.body.data);
-      const response = await axios.put(
-        `https://digitalcampus.beta.instructure.com/api/v1/courses/214/pages/${req.body.templateName}`,
-        `wiki_page[body]=${newData}`,
-        {
-          headers: {
-            Authorization:
-              "Bearer 20171~jYdCiwFisd1kJkLd8LuVui5iplxYE0pcHPw1H1JneIZ0cMLvYKzdUrLDmlHqNYcp",
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
-      // Respond with the response data
-      // res.send(response.data);
-      res.send("Data has been posted successfully");
-      console.log(response);
-    } catch (error) {
-      console.error("Error:", error);
-      res.status(500).send("An error occurred");
-    }
-  };
-  testingPost();
+  try {
+    const newData = encodeURI(req.body.data);
+    const response = await axios.put(
+      `https://digitalcampus.beta.instructure.com/api/v1/courses/214/pages/${req.body.templateName}`,
+      `wiki_page[body]=${newData}`,
+      {
+        headers: {
+          Authorization:
+            "Bearer 20171~jYdCiwFisd1kJkLd8LuVui5iplxYE0pcHPw1H1JneIZ0cMLvYKzdUrLDmlHqNYcp",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+    // Respond with the response data
+    // res.send(response.data);
+    res.send("Data has been posted successfully");
+    console.log(response);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("An error occurred");
+  }
 });
 // Start the server
 app.listen(port, () => {

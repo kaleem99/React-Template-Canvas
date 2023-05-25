@@ -16,7 +16,7 @@ const facultyBiographiesComp = (state) => {
     <div style="margin-top: 10px">
       <h2 style="color: rgb(20, 117, 212)">&lt;Faculty Name&gt;</h2>
       <div style="display: grid; grid-template-columns: 70% auto">
-        <p style="width: 90%; height: 200px">${state.input1}</p>
+        <p style="width: 90%; height: auto">${state.input1}</p>
         <div
           class="a"
           style="overflow-wrap: break-word; width: 90%; border: 1px solid"
@@ -30,7 +30,7 @@ const facultyBiographiesComp = (state) => {
     <div style="margin-top: 10px">
       <h2 style="color: rgb(20, 117, 212)">&lt;Faculty Name&gt;</h2>
       <div style="display: grid; grid-template-columns: 70% auto">
-      <p style="width: 90%; height: 200px">${state.input2}</p>
+      <p style="width: 90%; height: auto">${state.input2}</p>
       <div
           class="a"
           style="overflow-wrap: break-word; width: 90%; border: 1px solid"

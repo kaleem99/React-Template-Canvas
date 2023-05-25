@@ -10,6 +10,7 @@ import FacultyBiographies from "Pages/FacultyBiographies";
 import CourseReadings from "Pages/CourseReadings";
 import StudentSelfRecordingInstructions from "Pages/StudentSelfRecordingInstructions";
 import FinalExamWeek from "Pages/FinalExamWeek";
+import ViewLectureSlides from "Components.js/ViewTemplate";
 function App() {
   const sections = [
     "LectureSlides",
@@ -19,37 +20,37 @@ function App() {
     "StudentSelfRecordingInstructions",
     "FinalExamWeek",
   ];
-  const [text, setText] = useState("Enter Text here.");
-  const [text2, setText2] = useState("Enter Text here.");
-  const [logo1, setLogo1] = useState("");
-  const [logo2, setLogo2] = useState("");
+  const [view, setView] = useState(false);
+  const [getData, setGetData] = useState([]);
   let body = "";
 
-  const [videoLink, setVideoLink] = useState("Video Url Link");
-  const [code, setCode] = useState("");
-  const [showPopup, setShowPopup] = useState(false);
   const [courseSection, setCourseSection] = useState("LectureSlides");
   switch (courseSection) {
     case "LectureSlides":
-      body = <LectureSlides />;
+      body = <LectureSlides courseSection={courseSection} view={view} />;
       break;
     case "CourseOverview":
-      body = <CourseOverview courseSection={courseSection} />;
+      body = <CourseOverview courseSection={courseSection} view={view} />;
       break;
     case "FacultyBiographies":
-      body = <FacultyBiographies courseSection={courseSection} />;
+      body = <FacultyBiographies courseSection={courseSection} view={view} />;
       break;
     case "CourseReadings":
-      body = <CourseReadings courseSection={courseSection} />;
+      body = <CourseReadings courseSection={courseSection} view={view} />;
       break;
     case "StudentSelfRecordingInstructions":
-      body = <StudentSelfRecordingInstructions courseSection={courseSection} />;
+      body = (
+        <StudentSelfRecordingInstructions
+          courseSection={courseSection}
+          view={view}
+        />
+      );
       break;
     case "FinalExamWeek":
-      body = <FinalExamWeek courseSection={courseSection} />;
+      body = <FinalExamWeek courseSection={courseSection} view={view} />;
       break;
     default:
-      body = <LectureSlides courseSection={courseSection} />;
+      body = <LectureSlides courseSection={courseSection} view={view} />;
       break;
   }
   const getDataAndExport = () => {
@@ -57,14 +58,28 @@ function App() {
     data = JSON.parse(data);
     if (data !== null) {
       console.log(data.text);
-      fetch("/templates", {
+      fetch("https://express-template-backend.onrender.com/templates", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ data: data.text, templateName: courseSection }),
-      });
+      }).then((res) => console.log(res));
     } else {
       console.log("No Template saved");
     }
+  };
+  const changeCourseSection = (data) => {
+    setCourseSection(data);
+    setView(false);
+  };
+  const testing = () => {
+    fetch("https://express-template-backend.onrender.com/")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
   return (
     <div className="App">
@@ -93,7 +108,7 @@ function App() {
                 border: "1px solid",
               }}
               className={data === courseSection ? "active" : ""}
-              onClick={() => setCourseSection(data)}
+              onClick={() => changeCourseSection(data)}
             >
               {data}
             </button>
@@ -116,7 +131,23 @@ function App() {
         }}
       >
         Export Template
-      </button>{" "}
+      </button>
+      <button
+        onClick={() => (view ? setView(false) : setView(true))}
+        style={{
+          width: "auto",
+          paddingLeft: "15px",
+          paddingRight: "15px",
+          height: "40px",
+          marginTop: "auto",
+          marginBottom: "auto",
+          marginLeft: "20px",
+          borderRadius: "5px",
+          border: "1px solid",
+        }}
+      >
+        {view ? "Generate Template" : "View Generated Template"}
+      </button>
     </div>
   );
 }
