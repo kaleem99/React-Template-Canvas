@@ -40,13 +40,12 @@ const testing = async () => {
 // curl -X PUT -H 'Authorization: Bearer 20171~jYdCiwFisd1kJkLd8LuVui5iplxYE0pcHPw1H1JneIZ0cMLvYKzdUrLDmlHqNYcp' https://digitalcampus.beta.instructure.com/api/v1/courses/214/pages/New%20Page%20API%20Template -d wiki_page[body]=%3Cdiv%3E%0A%3Ch1%3ENew%20Course%20Heading%3C/h1%3E%0A%3Cbr%3E%3C/br%3E%0A%3Cbody%3E%0A%20%20Lorem%20Ipsum%20is%20simply%20dummy%20text%20of%20the%20printing%20and%20typesetting%20industry.%0A%3C/body%3E%0A%3C/div%3E
 app.post("/templates", async (req, res) => {
   // console.log(JSON.stringify(req.body.data));
-  // console.log(req.body.data);
+  console.log(encodeURI(req.body.data));
   const testingPost = async () => {
     try {
       const newData = encodeURI(req.body.data);
-
       const response = await axios.put(
-        "https://digitalcampus.beta.instructure.com/api/v1/courses/214/pages/New%20template%20API%20Test",
+        `https://digitalcampus.beta.instructure.com/api/v1/courses/214/pages/${req.body.templateName}`,
         `wiki_page[body]=${newData}`,
         {
           headers: {

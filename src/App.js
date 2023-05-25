@@ -34,25 +34,38 @@ function App() {
       body = <LectureSlides />;
       break;
     case "CourseOverview":
-      body = <CourseOverview />;
+      body = <CourseOverview courseSection={courseSection} />;
       break;
     case "FacultyBiographies":
-      body = <FacultyBiographies />;
+      body = <FacultyBiographies courseSection={courseSection} />;
       break;
     case "CourseReadings":
-      body = <CourseReadings />;
+      body = <CourseReadings courseSection={courseSection} />;
       break;
     case "StudentSelfRecordingInstructions":
-      body = <StudentSelfRecordingInstructions />;
+      body = <StudentSelfRecordingInstructions courseSection={courseSection} />;
       break;
     case "FinalExamWeek":
-      body = <FinalExamWeek />;
+      body = <FinalExamWeek courseSection={courseSection} />;
       break;
     default:
-      body = <LectureSlides />;
+      body = <LectureSlides courseSection={courseSection} />;
       break;
   }
-
+  const getDataAndExport = () => {
+    let data = localStorage.getItem(courseSection, JSON);
+    data = JSON.parse(data);
+    if (data !== null) {
+      console.log(data.text);
+      fetch("/templates", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: data.text, templateName: courseSection }),
+      });
+    } else {
+      console.log("No Template saved");
+    }
+  };
   return (
     <div className="App">
       <div
@@ -88,6 +101,22 @@ function App() {
         })}
       </div>
       {body}
+      <button
+        onClick={() => getDataAndExport()}
+        style={{
+          width: "auto",
+          paddingLeft: "15px",
+          paddingRight: "15px",
+          height: "40px",
+          marginTop: "auto",
+          marginBottom: "auto",
+          marginLeft: "20px",
+          borderRadius: "5px",
+          border: "1px solid",
+        }}
+      >
+        Export Template
+      </button>{" "}
     </div>
   );
 }

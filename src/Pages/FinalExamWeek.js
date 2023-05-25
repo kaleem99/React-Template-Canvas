@@ -1,5 +1,5 @@
 import { useState } from "react";
-function FinalExamWeek() {
+function FinalExamWeek({courseSection}) {
   const [state, setState] = useState({
     input1: "",
   });
