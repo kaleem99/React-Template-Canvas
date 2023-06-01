@@ -141,3 +141,17 @@ p {
   background-color: #1176d3;
   color: white;
 }
+.popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #292828;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 8px;
+  position: absolute;
+  z-index: 1;
+  /* bottom: 125%; */
+  left: 10%;
+  margin-left: -80px;
+}

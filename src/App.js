@@ -5,34 +5,34 @@ import exportedHtml from "./exportedHTML";
 import LectureSlides from "Pages/LectureSlides";
 // import { writeJsonFile } from "write-json-file";
 // import { writeJsonFile } from "write-json-file";
-import CourseOverview from "Pages/CourseOverview";
+import WelcomePage from "Pages/WelcomePage";
 import FacultyBiographies from "Pages/FacultyBiographies";
 import CourseReadings from "Pages/CourseReadings";
 import StudentSelfRecordingInstructions from "Pages/StudentSelfRecordingInstructions";
 import FinalExamWeek from "Pages/FinalExamWeek";
-import ViewLectureSlides from "Components.js/ViewTemplate";
+import ViewLectureSlides from "Components/ViewTemplate";
 function App() {
   const sections = [
-    "LectureSlides",
-    "CourseOverview",
-    "FacultyBiographies",
-    "CourseReadings",
-    "StudentSelfRecordingInstructions",
-    "FinalExamWeek",
+    // "LectureSlides",
+    "WelcomePage",
+    "TextPage",
+    // "CourseReadings",
+    // "StudentSelfRecordingInstructions",
+    "CourseEnd",
   ];
   const [view, setView] = useState(false);
   const [getData, setGetData] = useState([]);
   let body = "";
 
-  const [courseSection, setCourseSection] = useState("LectureSlides");
+  const [courseSection, setCourseSection] = useState("WelcomePage");
   switch (courseSection) {
     case "LectureSlides":
       body = <LectureSlides courseSection={courseSection} view={view} />;
       break;
-    case "CourseOverview":
-      body = <CourseOverview courseSection={courseSection} view={view} />;
+    case "WelcomePage":
+      body = <WelcomePage courseSection={courseSection} view={view} />;
       break;
-    case "FacultyBiographies":
+    case "TextPage":
       body = <FacultyBiographies courseSection={courseSection} view={view} />;
       break;
     case "CourseReadings":
@@ -46,7 +46,7 @@ function App() {
         />
       );
       break;
-    case "FinalExamWeek":
+    case "CourseEnd":
       body = <FinalExamWeek courseSection={courseSection} view={view} />;
       break;
     default:
@@ -63,6 +63,7 @@ function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ data: data.text, templateName: courseSection }),
       }).then((res) => console.log(res));
+      console.log("Template Saved.");
     } else {
       console.log("No Template saved");
     }
@@ -80,6 +81,16 @@ function App() {
       .catch((err) => {
         console.log(err.message);
       });
+  };
+  const copyText = () => {
+    console.log(document.getElementById("TextCopied"));
+    document.getElementById("TextCopied").style.visibility = "visible";
+    navigator.clipboard.writeText(
+      JSON.parse(localStorage.getItem(courseSection, JSON)).text
+    );
+    setTimeout(() => {
+      document.getElementById("TextCopied").style.visibility = "hidden";
+    }, 1000);
   };
   return (
     <div className="App">
@@ -147,6 +158,26 @@ function App() {
         }}
       >
         {view ? "Generate Template" : "View Generated Template"}
+      </button>
+      <span class="popuptext" id="TextCopied">
+        Copied HTML content
+      </span>
+
+      <button
+        onClick={() => copyText()}
+        style={{
+          width: "auto",
+          paddingLeft: "15px",
+          paddingRight: "15px",
+          height: "40px",
+          marginTop: "auto",
+          marginBottom: "auto",
+          marginLeft: "20px",
+          borderRadius: "5px",
+          border: "1px solid",
+        }}
+      >
+        Copy HTML
       </button>
     </div>
   );

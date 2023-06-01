@@ -1,9 +1,12 @@
-import courseOverviewComp from "Components.js/CourseOverviewComp";
-import ViewTemplate from "Components.js/ViewTemplate";
+import WelcomePageComp from "Components/WelcomePageComp";
+import ViewTemplate from "Components/ViewTemplate";
 import { useState } from "react";
-function CourseOverview({ courseSection, view }) {
+function WelcomePage({ courseSection, view }) {
   const [state, setState] = useState({
     input1: "",
+    input2: "",
+    input3: "",
+    input4: "",
   });
   const changeStateValue = (e) => {
     const { name, value } = e.target;
@@ -15,11 +18,11 @@ function CourseOverview({ courseSection, view }) {
   };
   const writeToFile = async () => {
     // const result = exportedHtml(text, text2, videoLink, logo1, logo2);
-    const courseOverviewResult = courseOverviewComp(state);
-    console.log(courseOverviewResult);
+    const WelcomePageResult = WelcomePageComp(state);
+    console.log(WelcomePageResult);
     localStorage.setItem(
-      "CourseOverview",
-      JSON.stringify({ text: courseOverviewResult })
+      "WelcomePage",
+      JSON.stringify({ text: WelcomePageResult })
     );
     // localStorage.setItem("html", JSON.stringify({ text: result }));
   };
@@ -27,7 +30,7 @@ function CourseOverview({ courseSection, view }) {
     return (
       <>
         <div
-          className="CourseOverviewDiv"
+          className="WelcomePageDiv"
           style={{
             width: "90%",
             height: "auto",
@@ -36,7 +39,29 @@ function CourseOverview({ courseSection, view }) {
             margin: "2% auto",
           }}
         >
-          <h1 style={{ color: "#1475D4" }}>Course Overview</h1>
+          <div
+          // style={{ width: "80%", height: "300px", backgroundColor: "red" }}
+          >
+            <h1>Banner</h1>
+            <input
+              placeholder="Banner Image Link"
+              style={{ width: "400px", height: "50px" }}
+              value={state.input1}
+              name="input1"
+              onChange={changeStateValue}
+            />
+          </div>
+          <div>
+            <h1 style={{ color: "#1475D4" }}>Welcome To Try Its</h1>
+          </div>
+          <textarea
+            placeholder="Text Entry"
+            style={{ width: "400px", height: "50px" }}
+            value={state.input2}
+            name="input2"
+            onChange={changeStateValue}
+          />
+
           <p>Click the play button below to watch the Course Overview video.</p>
           <div
             className="LectureSlides"
@@ -48,7 +73,7 @@ function CourseOverview({ courseSection, view }) {
               margin: "auto",
             }}
           >
-            {Object.entries(state).map(([key, value]) => {
+            {/* {Object.entries(state).map(([key, value]) => {
               return (
                 <div style={{ marginTop: "10px" }}>
                   <input
@@ -60,10 +85,24 @@ function CourseOverview({ courseSection, view }) {
                   />
                 </div>
               );
-            })}
+            })} */}
+            <textarea
+              placeholder="Video input"
+              style={{ width: "400px", height: "50px" }}
+              value={state.input3}
+              name="input3"
+              onChange={changeStateValue}
+            />
           </div>
+          <br></br>
+          <textarea
+            placeholder="Text Entry"
+            style={{ width: "400px", height: "50px" }}
+            value={state.input4}
+            name="input4"
+            onChange={changeStateValue}
+          />
         </div>
-
         <button
           onClick={() => writeToFile()}
           style={{
@@ -87,4 +126,4 @@ function CourseOverview({ courseSection, view }) {
   }
 }
 
-export default CourseOverview;
+export default WelcomePage;

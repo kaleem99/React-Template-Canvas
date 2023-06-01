@@ -1,6 +1,6 @@
 import { useState } from "react";
-import facultyBiographiesComp from "Components.js/FacultyBiographiesComp";
-import ViewTemplate from "Components.js/ViewTemplate";
+import facultyBiographiesComp from "Components/FacultyBiographiesComp";
+import ViewTemplate from "Components/ViewTemplate";
 function FacultyBiographies({ courseSection, view }) {
   const [state, setState] = useState({
     input1: "",
@@ -19,7 +19,7 @@ function FacultyBiographies({ courseSection, view }) {
     const courseOverviewResult = facultyBiographiesComp(state);
     console.log(courseOverviewResult);
     localStorage.setItem(
-      "FacultyBiographies",
+      "TextPage",
       JSON.stringify({ text: courseOverviewResult })
     );
     // localStorage.setItem("html", JSON.stringify({ text: result }));

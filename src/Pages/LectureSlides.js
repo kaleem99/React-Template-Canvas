@@ -1,5 +1,5 @@
-import lectureSlidesComp from "Components.js/LectureSlidesComp";
-import ViewLectureSlides from "Components.js/ViewTemplate";
+import lectureSlidesComp from "Components/LectureSlidesComp";
+import ViewLectureSlides from "Components/ViewTemplate";
 import { useState } from "react";
 function LectureSlides({ view, courseSection }) {
   console.log(courseSection)

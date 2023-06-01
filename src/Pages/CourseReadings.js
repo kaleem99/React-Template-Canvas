@@ -1,6 +1,6 @@
 import { useState } from "react";
-import courseReadingsComp from "Components.js/CourseReadingsComp";
-import ViewTemplate from "Components.js/ViewTemplate";
+import courseReadingsComp from "Components/CourseReadingsComp";
+import ViewTemplate from "Components/ViewTemplate";
 function CourseReadings({ courseSection, view }) {
   const [state, setState] = useState({
     input1: "",
