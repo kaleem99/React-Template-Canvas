@@ -1,46 +1,48 @@
 const courseOverviewComp = (state) => {
-  const data = ` <div
-    class="CourseOverviewDiv"
-    style="width: 90%; height: auto; padding: 20px; border: 1px solid; margin: 2% auto;"
+  const data = `<div
+  className="Welcome PageDiv"
+  style="
+    width: 90%;
+    height: auto;
+    padding: 20px;
+    border: 1px solid;
+    margin: 2% auto"
+>
+  <div
+  style="width: 80%; height: auto;"
   >
-  <div style="margin:auto; width:80%;">
-  <img
-  width="100%"
-  height="auto"
-  src="${state.input1}"
-  alt=""
-  style=" margin-top: 100px; margin-bottom: auto"
-/>
+    <img src="https://graphics.getsmarter.com/GS+email+signatures/Email+signature+tool/dist/img/g.jpg"></img>
   </div>
-  <br></br>
-    <h1 style="color: rgb(20, 117, 212);text-align: center;">Welcome To Try Its</h1>
-    <div style="margin: 10px auto; width: 80%">
-    <p>${state.input2}</p>
+  <div
+  >
+    <h1 style="color: #E52370">Welcome To ${state.input1}</h1>
   </div>
-    <div
-      class="LectureSlides"
-      style="width: 100%; height: auto; margin: auto;"
-    >
-      <div style="margin-top: 10px; width: 80%; margin: auto; padding: 10px; border: 1px solid">
-      <br></br>
-      <p>Click the play button below to watch the Course Overview video.</p>
-        <iframe
-          width="100%"
-          height="450px"
-          src="${state.input3}"
-          title="courseOverview"
-          allowfullscreen="allowfullscreen"
-          mozallowfullscreen="mozallowfullscreen" 
-          msallowfullscreen="msallowfullscreen" 
-          oallowfullscreen="oallowfullscreen" 
-          webkitallowfullscreen="webkitallowfullscreen"
-        ></iframe>
-      </div>
-      <div style="margin: 10px auto; width: 80%;">
-      <p>${state.input4}</p>
-    </div>
-    </div>
-  </div>`;
+  <h2>Welcome to the course</h2>
+  <p>Welcome!</p>
+  <text>
+    Thank you for joining this Try It course. This course is a portion
+    of a module in the full<br> ${state.input2} ${state.input3} course. After completing this<br> Try It course, you’ll be able to:
+  </text>
+  <ul>
+    <li>
+    ${state.input4} 
+    </li>
+  </ul>
+  <p>
+    This free Try It course is ungraded and does not award a
+    certificate, but tell us what you<br> think in the survey at the end!
+  </p>
+  <p>
+    If you are new to the edX platform, we recommend reviewing the
+    resources in
+    <a style="color: rgb(17, 85, 204);" href="https://www.google.com/url?q=https://www.edx.org/course/demox&sa=D&source=docs&ust=1685961469814455&usg=AOvVaw1S5GSUAC2YK9XZjaaZRoTV">
+      DemoX
+    </a>
+    .<br> You can reach our technical support team via the
+    <a style="color: rgb(17, 85, 204);" href="https://support.edx.org/hc/en-us">Help</a> link in the
+    upper right corner of<br> any page.
+  </p>
+</div>`;
   return data;
 };
 

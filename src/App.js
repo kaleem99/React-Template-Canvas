@@ -6,33 +6,33 @@ import LectureSlides from "Pages/LectureSlides";
 // import { writeJsonFile } from "write-json-file";
 // import { writeJsonFile } from "write-json-file";
 import WelcomePage from "Pages/WelcomePage";
-import FacultyBiographies from "Pages/FacultyBiographies";
+import FacultyBiographies from "Pages/TryItContent";
 import CourseReadings from "Pages/CourseReadings";
 import StudentSelfRecordingInstructions from "Pages/StudentSelfRecordingInstructions";
-import FinalExamWeek from "Pages/FinalExamWeek";
+import FinalExamWeek from "Pages/CourseCompletion";
 import ViewLectureSlides from "Components/ViewTemplate";
 function App() {
   const sections = [
     // "LectureSlides",
-    "WelcomePage",
-    "TextPage",
+    "Welcome Page",
+    "Try It Content",
     // "CourseReadings",
     // "StudentSelfRecordingInstructions",
-    "CourseEnd",
+    "Course Completion",
   ];
   const [view, setView] = useState(false);
   const [getData, setGetData] = useState([]);
   let body = "";
 
-  const [courseSection, setCourseSection] = useState("WelcomePage");
+  const [courseSection, setCourseSection] = useState("Welcome Page");
   switch (courseSection) {
     case "LectureSlides":
       body = <LectureSlides courseSection={courseSection} view={view} />;
       break;
-    case "WelcomePage":
+    case "Welcome Page":
       body = <WelcomePage courseSection={courseSection} view={view} />;
       break;
-    case "TextPage":
+    case "Try It Content":
       body = <FacultyBiographies courseSection={courseSection} view={view} />;
       break;
     case "CourseReadings":
@@ -46,7 +46,7 @@ function App() {
         />
       );
       break;
-    case "CourseEnd":
+    case "Course Completion":
       body = <FinalExamWeek courseSection={courseSection} view={view} />;
       break;
     default:

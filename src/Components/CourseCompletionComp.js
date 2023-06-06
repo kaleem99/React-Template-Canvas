@@ -12,12 +12,12 @@ const finalExamWeekComp = (state) => {
     style=" margin-top: 100px; margin-bottom: auto"
   />
     </div>
-    <h2 style="color: #1475D4;">Welcome to the completion of [Course Name]!</h2>
+    <h1 style="color: #E52370;">Next Steps</h1>
     <div style="width:70%;">
     <p>${state.input1}</p>
     </div>  
-    <h3 style="color: #1475D4;">Here are a few key takeaways from the course:
-    </h3>
+    <h2>Completion Page:
+    </h2>
       <div
         class="LectureSlides"
         style="width: 70%; height: auto; padding: 20px"

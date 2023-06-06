@@ -1,6 +1,7 @@
 {
-  "name": "basic-template-canvas",
+  "name": "React-Template-Canvas",
   "version": "0.1.0",
+  "homepage": "https://kaleem99.github.io/React-Template-Canvas",
   "private": true,
   "proxy": "http://localhost:1000",
   "dependencies": {
@@ -19,6 +20,8 @@
     "write-json-file": "^5.0.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -41,5 +44,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
   }
 }
+
+

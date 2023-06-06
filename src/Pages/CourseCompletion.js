@@ -1,4 +1,4 @@
-import finalExamWeekComp from "Components/FinalExamWeekComp";
+import finalExamWeekComp from "Components/CourseCompletionComp";
 import { useState } from "react";
 import ViewTemplate from "Components/ViewTemplate";
 function FinalExamWeek({ courseSection, view }) {
@@ -9,7 +9,6 @@ function FinalExamWeek({ courseSection, view }) {
     input4: "",
     input5: "",
     input6: "",
-    input7: "",
   });
   const [banner, setBanner] = useState("");
   const placeholders = [
@@ -51,14 +50,10 @@ function FinalExamWeek({ courseSection, view }) {
             margin: "2% auto",
           }}
         >
-          <h1 style={{ color: "#1475D4" }}>Image Banner</h1>
-
-          <input
-            style={{ marginTop: "10px", width: "400px", height: "50px" }}
-            placeholder="Image Banner"
-            onChange={(e) => setBanner(e.target.value)}
-          />
-          <h1 style={{ color: "#1475D4" }}>Course completion!</h1>
+          <div>
+            <img src="https://graphics.getsmarter.com/GS+email+signatures/Email+signature+tool/dist/img/g.jpg"></img>
+          </div>
+          <h1 style={{ color: "#E52370" }}>Course completion!</h1>
           <div
             className="LectureSlides"
             style={{
@@ -69,33 +64,59 @@ function FinalExamWeek({ courseSection, view }) {
               margin: "auto",
             }}
           >
-            {Object.entries(state).map(([key, value], i) => {
-              return (
-                <>
-                  {i === 1 && (
-                    <h2 style={{ color: "#1475D4" }}>
-                      Reminders and suggestions
-                    </h2>
-                  )}
-                  {i > 0 && i < 6 && <label>{i}. </label>}
-                  <textarea
-                    placeholder={placeholders[i]}
-                    style={{
-                      marginTop: "10px",
-                      width: "400px",
-                      height: "50px",
-                    }}
-                    name={`input${i + 1}`}
-                    value={eval("state.input1" + (i + 1))}
-                    onChange={handleChange}
-                  />
-                  <br></br>
-                  {i === 5 && (
-                    <h2 style={{ color: "#1475D4" }}>Course ending Text</h2>
-                  )}
-                </>
-              );
-            })}
+            <h2>Completion page</h2>
+            <textarea
+              // placeholder={placeholders[i]}
+              style={{
+                marginTop: "10px",
+                width: "400px",
+                height: "50px",
+              }}
+              // name={`input${i + 1}`}
+              // value={eval("state.input1" + (i + 1))}
+              onChange={handleChange}
+            />
+            <br></br>
+            <label>1. </label>
+            <textarea
+              // placeholder={placeholders[i]}
+              style={{
+                marginTop: "10px",
+                width: "400px",
+                height: "50px",
+              }}
+              // name={`input${i + 1}`}
+              // value={eval("state.input1" + (i + 1))}
+              onChange={handleChange}
+            />
+            <br></br>
+          
+            <label>2. </label>
+            <textarea
+              // placeholder={placeholders[i]}
+              style={{
+                marginTop: "10px",
+                width: "400px",
+                height: "50px",
+              }}
+              // name={`input${i + 1}`}
+              // value={eval("state.input1" + (i + 1))}
+              onChange={handleChange}
+            />
+            <br></br>
+            <label>3. </label>
+            <textarea
+              // placeholder={placeholders[i]}
+              style={{
+                marginTop: "10px",
+                width: "400px",
+                height: "50px",
+              }}
+              // name={`input${i + 1}`}
+              // value={eval("state.input1" + (i + 1))}
+              onChange={handleChange}
+            />
+            <h2 style={{ color: "#1475D4" }}>Course ending Text</h2>
           </div>
         </div>
         <button

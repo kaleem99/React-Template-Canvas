@@ -6,11 +6,10 @@ const ViewTemplate = ({ data, courseSection }) => {
   if (result === null) {
     result = { text: "No template to show" };
   }
-  console.log(result);
-  console.log(courseSection);
+
   return (
     <div
-      style={{ width: "80%", height: "auto", margin: "auto" }}
+      style={{ width: "100%", height: "auto", margin: "auto" }}
       dangerouslySetInnerHTML={{ __html: result.text }}
     ></div>
   );
