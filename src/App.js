@@ -21,7 +21,10 @@ function App() {
     "Course Completion",
   ];
   const [view, setView] = useState(false);
-  const [getData, setGetData] = useState([]);
+  const [state, setState] = useState([]);
+  const [bodyHtml, setBodyHtml] = useState([]);
+  const [index, setIndex] = useState(1);
+
   let body = "";
 
   const [courseSection, setCourseSection] = useState("Welcome Page");
@@ -33,7 +36,18 @@ function App() {
       body = <WelcomePage courseSection={courseSection} view={view} />;
       break;
     case "Try It Content":
-      body = <FacultyBiographies courseSection={courseSection} view={view} />;
+      body = (
+        <FacultyBiographies
+          courseSection={courseSection}
+          view={view}
+          index={index}
+          setIndex={setIndex}
+          state={state}
+          setState={setState}
+          bodyHtml={bodyHtml}
+          setBodyHtml={setBodyHtml}
+        />
+      );
       break;
     case "CourseReadings":
       body = <CourseReadings courseSection={courseSection} view={view} />;
@@ -92,6 +106,12 @@ function App() {
       document.getElementById("TextCopied").style.visibility = "hidden";
     }, 1000);
   };
+  const setViewTemplate = () => {
+    setView(true);
+    setState([]);
+    setBodyHtml([]);
+    setIndex(1);
+  };
   return (
     <div className="App">
       <div
@@ -104,7 +124,7 @@ function App() {
           textAlign: "center",
         }}
       >
-        {sections.map((data) => {
+        {sections.map((data, i) => {
           return (
             <button
               style={{
@@ -118,6 +138,7 @@ function App() {
                 borderRadius: "5px",
                 border: "1px solid",
               }}
+              key={i}
               className={data === courseSection ? "active" : ""}
               onClick={() => changeCourseSection(data)}
             >
@@ -144,7 +165,7 @@ function App() {
         Export Template
       </button>
       <button
-        onClick={() => (view ? setView(false) : setView(true))}
+        onClick={() => (view ? setView(false) : setViewTemplate())}
         style={{
           width: "auto",
           paddingLeft: "15px",
@@ -159,7 +180,7 @@ function App() {
       >
         {view ? "Generate Template" : "View Generated Template"}
       </button>
-      <span class="popuptext" id="TextCopied">
+      <span className="popuptext" id="TextCopied">
         Copied HTML content
       </span>
 

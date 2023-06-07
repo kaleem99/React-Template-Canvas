@@ -2,7 +2,7 @@ const facultyBiographiesComp = (state, elementTypes) => {
   let result = document.createElement("div");
   console.log(elementTypes);
   console.log(state);
-  const stateValues = Object.values(state);
+  const stateValues = state.map((data) => Object.values(data));
   for (let i = 0; i < elementTypes.length; i++) {
     switch (elementTypes[i]) {
       case "LearningOutcomes":

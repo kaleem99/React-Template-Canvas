@@ -66,7 +66,7 @@ function WelcomePage({ courseSection, view }) {
           </div>
           <h1>Welcome to the course</h1>
           <p>Welcome!</p>
-          <text>
+          <p>
             Thank you for joining this Try It course. This course is a portion
             of a module in the full{" "}
             <input
@@ -84,7 +84,7 @@ function WelcomePage({ courseSection, view }) {
               onChange={changeStateValue}
             />{" "}
             course. After completing this Try It course, you’ll be able to:
-          </text>
+          </p>
           <ul>
             <li>
               <input

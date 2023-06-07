@@ -22,24 +22,36 @@ const elementTypeNames = [
   "List",
 ];
 const elementTypes = [];
+const newArr = [];
 
-function FacultyBiographies({ courseSection, view }) {
-  const [state, setState] = useState({
-    input1: "",
-    input2: "",
-    input3: "",
-  });
-  let body = [];
-  const [bodyHtml, setBodyHtml] = useState("");
+function FacultyBiographies({
+  courseSection,
+  view,
+  index,
+  setIndex,
+  state,
+  setState,
+  bodyHtml,
+  setBodyHtml,
+}) {
+  const [drag, setDrag] = useState("");
+  const [drop, setDrop] = useState("");
+
   const [select, setSelect] = useState("");
-  const [index, setIndex] = useState(1);
-  const changeStateValue = (e) => {
-    const { name, value } = e.target;
-    setState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-    console.log(state);
+  let body = [];
+
+  const handleDragStart = (e, index) => {
+    e.dataTransfer.setData("text/plain", index);
+    setDrag(index);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, targetIndex) => {
+    console.log(bodyHtml);
+    setDrop(targetIndex);
   };
   const writeToFile = async () => {
     const courseOverviewResult = facultyBiographiesComp(state, elementTypes);
@@ -49,18 +61,28 @@ function FacultyBiographies({ courseSection, view }) {
       JSON.stringify({ text: courseOverviewResult })
     );
   };
-  const handleChange = (e) => {
+  const handleChange = (e, index) => {
     const { name, value } = e.target;
-    setState((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    let newArrData = state;
+    console.log(index);
+    newArrData[index - 1] = { [name]: value };
+    console.log(newArrData);
+    setState(newArrData);
+    console.log(name, value, index);
+    console.log(state);
   };
-  console.log(state, index);
   const addElement = (select) => {
+    console.log(select);
+    if (select === "") {
+      return false;
+    }
     setIndex(index + 1);
+    console.log(index);
     elementTypes.push(select);
-    console.log(elementTypes);
+    let key = `item${index}`;
+    newArr.push({ [key]: "" });
+    setState(newArr);
+    console.log(state);
     switch (select) {
       case "LearningOutcomes":
         body.push(
@@ -166,13 +188,24 @@ function FacultyBiographies({ courseSection, view }) {
         break;
     }
     const result = body.map((component, index) => {
-      console.log(component);
-      return <React.Fragment key={index}>{component}</React.Fragment>;
+      return (
+        <React.Fragment key={index}>
+          <div
+            draggable
+            onDragStart={(e) => handleDragStart(e, index)}
+            onDragOver={handleDragOver}
+            onDrop={(e) => handleDrop(e, index)}
+          >
+            {component}
+          </div>
+        </React.Fragment>
+      );
     });
 
     setBodyHtml(result);
     console.log(state);
-    const dataValues = Object.values(state);
+    const dataValues = state.map((data) => Object.values(data));
+    console.log(dataValues);
     setTimeout(() => {
       let x = document.querySelectorAll(`.inputs`);
       for (let i = 0; i < x.length; i++) {
@@ -181,6 +214,15 @@ function FacultyBiographies({ courseSection, view }) {
     }, 100);
     return body;
   };
+  if (drag !== "" && drop !== "") {
+    let newDataArr = [...bodyHtml];
+    let temp = newDataArr[drag];
+    newDataArr[drag] = newDataArr[drop];
+    newDataArr[drop] = temp;
+    setBodyHtml(newDataArr);
+    setDrag("");
+    setDrop("");
+  }
   if (!view) {
     return (
       <>
@@ -198,11 +240,13 @@ function FacultyBiographies({ courseSection, view }) {
             onChange={(e) => setSelect(e.target.value)}
             style={{ width: "180px", height: "40px" }}
           >
-            <option disabled selected>
+            <option value={"None"} disabled selected>
               None
             </option>
-            {elementTypeNames.map((item) => (
-              <option value={item}>{item}</option>
+            {elementTypeNames.map((item, i) => (
+              <option key={i} value={item}>
+                {item}
+              </option>
             ))}
           </select>
           <button
@@ -277,6 +321,8 @@ function FacultyBiographies({ courseSection, view }) {
       </>
     );
   } else {
+    elementTypes.length = 0;
+    newArr.length = 0;
     return <ViewTemplate courseSection={courseSection} />;
   }
 }
