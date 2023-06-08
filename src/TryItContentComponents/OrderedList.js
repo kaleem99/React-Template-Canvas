@@ -1,5 +1,4 @@
-function SubHeading({ type, index, onChange, state }) {
-  console.log(state)
+function OrderedList({ type, index, onChange, state }) {
   return (
     <div>
       <h3>{type}:</h3>
@@ -9,9 +8,10 @@ function SubHeading({ type, index, onChange, state }) {
         value={eval(state[`input${index}`])}
         name={"input" + index}
         className={`inputs`}
+        key={index}
       />
     </div>
   );
 }
 
-export default SubHeading;
+export default OrderedList;

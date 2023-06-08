@@ -15,15 +15,15 @@ const elementTypeNames = [
   "Paragraph",
   "Text",
   "Heading",
-  "SubHeading",
+  "Subheading",
   "Image",
   "Video",
   "OptionalResources",
-  "List",
+  "UnorderedList",
+  "OrderedList",
 ];
 const elementTypes = [];
 const newArr = [];
-
 function FacultyBiographies({
   courseSection,
   view,
@@ -38,7 +38,6 @@ function FacultyBiographies({
   const [drop, setDrop] = useState("");
 
   const [select, setSelect] = useState("");
-  let body = [];
 
   const handleDragStart = (e, index) => {
     e.dataTransfer.setData("text/plain", index);
@@ -50,6 +49,7 @@ function FacultyBiographies({
   };
 
   const handleDrop = (e, targetIndex) => {
+    // console.log(bodyHtml);
     console.log(bodyHtml);
     setDrop(targetIndex);
   };
@@ -63,128 +63,122 @@ function FacultyBiographies({
   };
   const handleChange = (e, index) => {
     const { name, value } = e.target;
-    let newArrData = state;
+    const newArrState = state;
+    newArrState[index - 1] = value;
+    console.log(newArrState);
     console.log(index);
-    newArrData[index - 1] = { [name]: value };
-    console.log(newArrData);
-    setState(newArrData);
-    console.log(name, value, index);
-    console.log(state);
+    console.log(bodyHtml);
+    setState(newArrState);
   };
+
   const addElement = (select) => {
-    console.log(select);
+    // console.log(select);
     if (select === "") {
       return false;
     }
-    setIndex(index + 1);
-    console.log(index);
+    // console.log(index);
     elementTypes.push(select);
-    let key = `item${index}`;
-    newArr.push({ [key]: "" });
-    setState(newArr);
-    console.log(state);
+    // let key = `item${index}`;
+    const newArrState = state;
+    newArrState.push("");
+    setState(newArrState);
+    const body = bodyHtml;
+    const nameFormatted = select
+      .replace(/([a-z])([A-Z])/g, "$1 $2")
+      .toLowerCase();
     switch (select) {
       case "LearningOutcomes":
         body.push(
-          ...bodyHtml,
           <LearningOutcomes
             index={index}
             state={state}
-            type={select}
+            type={nameFormatted}
             onChange={handleChange}
           />
         );
         break;
       case "Paragraph":
         body.push(
-          ...bodyHtml,
           <Paragraph
             state={state}
             index={index}
-            type={select}
+            type={nameFormatted}
             onChange={handleChange}
           />
         );
         break;
       case "Image":
         body.push(
-          ...bodyHtml,
           <Image
             state={state}
             index={index}
-            type={select}
+            type={nameFormatted}
             onChange={handleChange}
           />
         );
         break;
       case "Video":
         body.push(
-          ...bodyHtml,
           <Video
             state={state}
             index={index}
-            type={select}
+            type={nameFormatted}
             onChange={handleChange}
           />
         );
         break;
       case "Heading":
         body.push(
-          ...bodyHtml,
           <Heading
             state={state}
             index={index}
-            type={select}
+            type={nameFormatted}
             onChange={handleChange}
           />
         );
         break;
       case "Text":
         body.push(
-          ...bodyHtml,
           <Text
             state={state}
             index={index}
-            type={select}
+            type={nameFormatted}
             onChange={handleChange}
           />
         );
         break;
-      case "SubHeading":
+      case "Subheading":
         body.push(
-          ...bodyHtml,
           <SubHeading
             state={state}
             index={index}
-            type={select}
+            type={nameFormatted}
             onChange={handleChange}
           />
         );
         break;
-      case "List":
+      case "UnorderedList":
         body.push(
-          ...bodyHtml,
           <List
             state={state}
             index={index}
-            type={select}
+            type={nameFormatted}
             onChange={handleChange}
           />
         );
         break;
       case "OptionalResources":
         body.push(
-          ...bodyHtml,
           <OptionalResources
             index={index}
             state={state}
             onChange={handleChange}
-            type={select}
+            type={nameFormatted}
           />
         );
         break;
       default:
-        body = "";
+        body.push("");
         break;
     }
     const result = body.map((component, index) => {
@@ -201,25 +195,42 @@ function FacultyBiographies({
         </React.Fragment>
       );
     });
-
+    setIndex(index + 1);
     setBodyHtml(result);
-    console.log(state);
-    const dataValues = state.map((data) => Object.values(data));
-    console.log(dataValues);
+
     setTimeout(() => {
       let x = document.querySelectorAll(`.inputs`);
       for (let i = 0; i < x.length; i++) {
-        x[i].value = dataValues[i] || "";
+        x[i].value = state[i] || "";
       }
-    }, 100);
+    }, 1);
+    console.log("STATE");
+    console.log(state);
+    console.log("BODYHTML");
+
+    console.log(bodyHtml);
+
     return body;
   };
-  if (drag !== "" && drop !== "") {
+  const changeElementPositions = () => {
     let newDataArr = [...bodyHtml];
     let temp = newDataArr[drag];
     newDataArr[drag] = newDataArr[drop];
     newDataArr[drop] = temp;
     setBodyHtml(newDataArr);
+  };
+  const changeTextPositions = () => {
+    let newDataArr2 = [...state];
+    let temp = newDataArr2[drag];
+    newDataArr2[drag] = newDataArr2[drop];
+    newDataArr2[drop] = temp;
+    setState(newDataArr2);
+  };
+  if (drag !== "" && drop !== "") {
+    console.log(drag, "Drag");
+    console.log(drop, "Drop");
+    changeElementPositions();
+    changeTextPositions();
     setDrag("");
     setDrop("");
   }
@@ -245,7 +256,7 @@ function FacultyBiographies({
             </option>
             {elementTypeNames.map((item, i) => (
               <option key={i} value={item}>
-                {item}
+                {item.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase()}
               </option>
             ))}
           </select>
@@ -265,7 +276,7 @@ function FacultyBiographies({
           >
             Add Element
           </button>
-          <h2>{select}</h2>
+          <h2>{select.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase()}</h2>
         </div>
         <div
           style={{
@@ -323,6 +334,7 @@ function FacultyBiographies({
   } else {
     elementTypes.length = 0;
     newArr.length = 0;
+
     return <ViewTemplate courseSection={courseSection} />;
   }
 }

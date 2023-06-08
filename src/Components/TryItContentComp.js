@@ -2,7 +2,7 @@ const facultyBiographiesComp = (state, elementTypes) => {
   let result = document.createElement("div");
   console.log(elementTypes);
   console.log(state);
-  const stateValues = state.map((data) => Object.values(data));
+  const stateValues = state;
   for (let i = 0; i < elementTypes.length; i++) {
     switch (elementTypes[i]) {
       case "LearningOutcomes":
@@ -36,11 +36,14 @@ const facultyBiographiesComp = (state, elementTypes) => {
         result.innerHTML += `<p>${stateValues[i]}</p>`;
 
         break;
-      case "SubHeading":
+      case "Subheading":
         result.innerHTML += `<h2>${stateValues[i]}</h2>`;
 
         break;
-      case "List":
+      case "UnorderedList":
+        result.innerHTML += `<li style="max-width: 50%;">${stateValues[i]}</li><br>`;
+        break;
+      case "OrderedList":
         result.innerHTML += `<li style="max-width: 50%;">${stateValues[i]}</li><br>`;
         break;
       case "OptionalResources":
