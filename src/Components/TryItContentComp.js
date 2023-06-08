@@ -3,9 +3,11 @@ const facultyBiographiesComp = (state, elementTypes) => {
   console.log(elementTypes);
   console.log(state);
   const stateValues = state;
+  let orderedListIndex = 1;
   for (let i = 0; i < elementTypes.length; i++) {
     switch (elementTypes[i]) {
       case "LearningOutcomes":
+        orderedListIndex = 1;
         break;
       case "Paragraph":
         result.innerHTML += `
@@ -13,11 +15,13 @@ const facultyBiographiesComp = (state, elementTypes) => {
             <p>${stateValues[i]}</p>
           </div>
         `;
+        orderedListIndex = 1;
         break;
       case "Image":
         result.innerHTML += `<div style="margin-top: 20px;">
             <img width="550px" height="300px" alt="" src="${stateValues[i]}"></img>
           </div>`;
+        orderedListIndex = 1;
         break;
       case "Video":
         result.innerHTML += ` <iframe
@@ -27,33 +31,36 @@ const facultyBiographiesComp = (state, elementTypes) => {
             height="300px"
             src="${stateValues[i]}"
           ></iframe>`;
-
+        orderedListIndex = 1;
         break;
       case "Heading":
         result.innerHTML += `<h1 style="color: #E52370">${stateValues[i]}</h1>`;
+        orderedListIndex = 1;
         break;
       case "Text":
         result.innerHTML += `<p>${stateValues[i]}</p>`;
-
+        orderedListIndex = 1;
         break;
       case "Subheading":
         result.innerHTML += `<h2>${stateValues[i]}</h2>`;
-
+        orderedListIndex = 1;
         break;
       case "UnorderedList":
         result.innerHTML += `<li style="max-width: 50%;">${stateValues[i]}</li><br>`;
+        orderedListIndex = 1;
         break;
       case "OrderedList":
-        result.innerHTML += `<li style="max-width: 50%;">${stateValues[i]}</li><br>`;
+        result.innerHTML += `<p style="max-width: 50%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${orderedListIndex}. ${stateValues[i]}</p>`;
+        orderedListIndex++;
         break;
       case "OptionalResources":
+        orderedListIndex = 1;
         break;
       default:
         result = "";
         break;
     }
   }
-  console.log(result);
   const data = `<div
   style="
     width: 90%;

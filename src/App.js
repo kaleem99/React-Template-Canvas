@@ -24,7 +24,7 @@ function App() {
   const [state, setState] = useState([]);
   const [bodyHtml, setBodyHtml] = useState([]);
   const [index, setIndex] = useState(1);
-
+  const [elementTypes, setElementTypes] = useState([]);
   let body = "";
 
   const [courseSection, setCourseSection] = useState("Welcome Page");
@@ -46,6 +46,8 @@ function App() {
           setState={setState}
           bodyHtml={bodyHtml}
           setBodyHtml={setBodyHtml}
+          elementTypes={elementTypes}
+          setElementTypes={setElementTypes}
         />
       );
       break;

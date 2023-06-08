@@ -140,6 +140,7 @@ p {
 .active {
   background-color: #1176d3;
   color: white;
+  font-weight: bold;
 }
 .popuptext {
   visibility: hidden;
@@ -165,4 +166,16 @@ textarea {
 }
 .line {
   /* height: 500px; */
+}
+button:hover {
+  background-color: #1176d3;
+  /* transition: 0.7s; */
+  color: white;
+  font-weight: bold;
+}
+button:focus-within {
+  /* Styles when button is clicked (focused) */
+  background-color: #063461;
+  color: white;
+  font-weight: bold;
 }

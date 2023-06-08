@@ -10,6 +10,7 @@ import Text from "TryItContentComponents/Text";
 import SubHeading from "TryItContentComponents/Subheading";
 import List from "TryItContentComponents/List";
 import OptionalResources from "TryItContentComponents/OptionalResources";
+import OrderedList from "TryItContentComponents/OrderedList";
 const elementTypeNames = [
   "LearningOutcomes",
   "Paragraph",
@@ -22,8 +23,6 @@ const elementTypeNames = [
   "UnorderedList",
   "OrderedList",
 ];
-const elementTypes = [];
-const newArr = [];
 function FacultyBiographies({
   courseSection,
   view,
@@ -33,6 +32,8 @@ function FacultyBiographies({
   setState,
   bodyHtml,
   setBodyHtml,
+  elementTypes,
+  setElementTypes,
 }) {
   const [drag, setDrag] = useState("");
   const [drop, setDrop] = useState("");
@@ -50,7 +51,6 @@ function FacultyBiographies({
 
   const handleDrop = (e, targetIndex) => {
     // console.log(bodyHtml);
-    console.log(bodyHtml);
     setDrop(targetIndex);
   };
   const writeToFile = async () => {
@@ -61,13 +61,10 @@ function FacultyBiographies({
       JSON.stringify({ text: courseOverviewResult })
     );
   };
-  const handleChange = (e, index) => {
-    const { name, value } = e.target;
+  const handleChange = (value, index) => {
     const newArrState = state;
     newArrState[index - 1] = value;
-    console.log(newArrState);
-    console.log(index);
-    console.log(bodyHtml);
+    console.log(elementTypes);
     setState(newArrState);
   };
 
@@ -77,7 +74,9 @@ function FacultyBiographies({
       return false;
     }
     // console.log(index);
-    elementTypes.push(select);
+    const newElementTypes = elementTypes;
+    newElementTypes.push(select);
+    setElementTypes(newElementTypes);
     // let key = `item${index}`;
     const newArrState = state;
     newArrState.push("");
@@ -167,6 +166,16 @@ function FacultyBiographies({
           />
         );
         break;
+      case "OrderedList":
+        body.push(
+          <OrderedList
+            state={state}
+            index={index}
+            type={nameFormatted}
+            onChange={handleChange}
+          />
+        );
+        break;
       case "OptionalResources":
         body.push(
           <OptionalResources
@@ -201,7 +210,12 @@ function FacultyBiographies({
     setTimeout(() => {
       let x = document.querySelectorAll(`.inputs`);
       for (let i = 0; i < x.length; i++) {
-        x[i].value = state[i] || "";
+        console.log(x[i].tagName);
+        if (x[i].tagName === "DIV") {
+          x[i].innerHTML = state[i] || "";
+        } else {
+          x[i].value = state[i] || "";
+        }
       }
     }, 1);
     console.log("STATE");
@@ -226,11 +240,18 @@ function FacultyBiographies({
     newDataArr2[drop] = temp;
     setState(newDataArr2);
   };
+  const changeElementTypesPosition = () => {
+    let newDataArr3 = [...elementTypes];
+    let temp = newDataArr3[drag];
+    newDataArr3[drag] = newDataArr3[drop];
+    newDataArr3[drop] = temp;
+    setElementTypes(newDataArr3);
+  };
   if (drag !== "" && drop !== "") {
-    console.log(drag, "Drag");
-    console.log(drop, "Drop");
+
     changeElementPositions();
     changeTextPositions();
+    changeElementTypesPosition();
     setDrag("");
     setDrop("");
   }
@@ -332,9 +353,6 @@ function FacultyBiographies({
       </>
     );
   } else {
-    elementTypes.length = 0;
-    newArr.length = 0;
-
     return <ViewTemplate courseSection={courseSection} />;
   }
 }
