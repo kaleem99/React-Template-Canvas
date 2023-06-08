@@ -113,6 +113,7 @@ function App() {
     setState([]);
     setBodyHtml([]);
     setIndex(1);
+    setElementTypes([]);
   };
   return (
     <div className="App">
