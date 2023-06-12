@@ -3,14 +3,27 @@ import "./App.css";
 import { useState } from "react";
 import exportedHtml from "./exportedHTML";
 import LectureSlides from "Pages/LectureSlides";
-// import { writeJsonFile } from "write-json-file";
-// import { writeJsonFile } from "write-json-file";
+import facultyBiographiesComp from "Components/TryItContentComp";
+import WelcomePageComp from "./Components/WelcomePageComp";
 import WelcomePage from "Pages/WelcomePage";
 import FacultyBiographies from "Pages/TryItContent";
 import CourseReadings from "Pages/CourseReadings";
 import StudentSelfRecordingInstructions from "Pages/StudentSelfRecordingInstructions";
 import FinalExamWeek from "Pages/CourseCompletion";
 import ViewLectureSlides from "Components/ViewTemplate";
+import addElement from "Components/AddElement";
+const elementTypeNames = [
+  // "LearningOutcomes",
+  "ContentBlock",
+  // "Text",
+  // "Heading",
+  // "Subheading",
+  // "Image",
+  // "Video",
+  // "OptionalResources",
+  // "UnorderedList",
+  // "OrderedList",
+];
 function App() {
   const sections = [
     // "LectureSlides",
@@ -25,15 +38,29 @@ function App() {
   const [bodyHtml, setBodyHtml] = useState([]);
   const [index, setIndex] = useState(1);
   const [elementTypes, setElementTypes] = useState([]);
+  const [select, setSelect] = useState("");
+
   let body = "";
 
   const [courseSection, setCourseSection] = useState("Welcome Page");
+  const handleChange = (value, index) => {
+    const newArrState = state;
+    newArrState[index - 1] = value;
+    setState(newArrState);
+  };
   switch (courseSection) {
     case "LectureSlides":
       body = <LectureSlides courseSection={courseSection} view={view} />;
       break;
     case "Welcome Page":
-      body = <WelcomePage courseSection={courseSection} view={view} />;
+      body = (
+        <WelcomePage
+          state={state}
+          setState={setState}
+          courseSection={courseSection}
+          view={view}
+        />
+      );
       break;
     case "Try It Content":
       body = (
@@ -44,6 +71,8 @@ function App() {
           setIndex={setIndex}
           state={state}
           setState={setState}
+          select={select}
+          setSelect={setSelect}
           bodyHtml={bodyHtml}
           setBodyHtml={setBodyHtml}
           elementTypes={elementTypes}
@@ -84,6 +113,21 @@ function App() {
       console.log("No Template saved");
     }
   };
+  const writeToFile = async () => {
+    let result = "";
+    console.log(courseSection);
+    console.log(state);
+    if (courseSection === "Welcome Page") {
+      result = WelcomePageComp(state);
+    } else if (courseSection === "Try It Content") {
+      result = facultyBiographiesComp(state, elementTypes);
+    }
+    console.log(result);
+    localStorage.setItem(
+      courseSection.toString(),
+      JSON.stringify({ text: result })
+    );
+  };
   const changeCourseSection = (data) => {
     setCourseSection(data);
     setView(false);
@@ -120,16 +164,162 @@ function App() {
       <div
         style={{
           width: "90%",
-          height: 50,
+          height: "auto",
           padding: "20px",
           border: "1px solid",
           margin: "1% auto",
           textAlign: "center",
+          background: "#063461",
         }}
       >
-        {sections.map((data, i) => {
-          return (
+        <div
+          style={{
+            height: "auto",
+            marginBottom: "auto",
+            marginTop: "auto",
+            width: "auto",
+            border: "1px solid",
+            marginLeft: "100px",
+            padding: 10,
+            borderRadius: "10px",
+            backgroundColor: "white",
+          }}
+        >
+          {courseSection === "Try It Content" && (
+            <div style={{ position: "absolute" }}>
+              <select
+                onChange={(e) => setSelect(e.target.value)}
+                style={{
+                  width: "180px",
+                  height: "40px",
+                  borderRadius: "5px",
+                  float: "left",
+                  fontSize: "20px",
+                }}
+              >
+                <option value={"None"} disabled selected>
+                  None
+                </option>
+                {elementTypeNames.map((item, i) => (
+                  <option key={i} value={item}>
+                    {item.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase()}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={() =>
+                  addElement(
+                    select,
+                    index,
+                    setElementTypes,
+                    setState,
+                    elementTypes,
+                    state,
+                    setIndex,
+                    setBodyHtml,
+                    bodyHtml,
+                    handleChange
+                  )
+                }
+                style={{
+                  width: "auto",
+                  paddingLeft: "15px",
+                  paddingRight: "15px",
+                  height: "40px",
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                  marginLeft: "20px",
+                  borderRadius: "5px",
+                  border: "1px solid",
+                  float: "left",
+                }}
+              >
+                Add Element
+              </button>
+            </div>
+          )}
+          {/* <h2>{select.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase()}</h2> */}
+          {sections.map((data, i) => {
+            return (
+              <button
+                style={{
+                  width: "auto",
+                  paddingLeft: "15px",
+                  paddingRight: "15px",
+                  height: "40px",
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                  marginLeft: "20px",
+                  borderRadius: "5px",
+                  border: "1px solid",
+                }}
+                key={i}
+                className={data === courseSection ? "active" : ""}
+                onClick={() => changeCourseSection(data)}
+              >
+                {data}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      {body}
+      <div style={{ width: "90%", margin: "auto", height: "100px" }}>
+        <button
+          onClick={() => writeToFile()}
+          style={{
+            width: "auto",
+            paddingLeft: "15px",
+            paddingRight: "15px",
+            height: "40px",
+            marginTop: "auto",
+            marginBottom: "auto",
+            marginLeft: "20px",
+            borderRadius: "5px",
+            border: "1px solid",
+          }}
+        >
+          Save Template
+        </button>
+        <button
+          onClick={() => getDataAndExport()}
+          style={{
+            width: "auto",
+            paddingLeft: "15px",
+            paddingRight: "15px",
+            height: "40px",
+            marginTop: "auto",
+            marginBottom: "auto",
+            marginLeft: "20px",
+            borderRadius: "5px",
+            border: "1px solid",
+          }}
+        >
+          Export Template
+        </button>
+        <button
+          onClick={() => (view ? setView(false) : setViewTemplate())}
+          style={{
+            width: "auto",
+            paddingLeft: "15px",
+            paddingRight: "15px",
+            height: "40px",
+            marginTop: "auto",
+            marginBottom: "auto",
+            marginLeft: "20px",
+            borderRadius: "5px",
+            border: "1px solid",
+          }}
+        >
+          {view ? "Generate Template" : "View Generated Template"}
+        </button>
+        {view && (
+          <>
+            <span className="popuptext" id="TextCopied">
+              Copied HTML content
+            </span>
             <button
+              onClick={() => copyText()}
               style={{
                 width: "auto",
                 paddingLeft: "15px",
@@ -141,68 +331,12 @@ function App() {
                 borderRadius: "5px",
                 border: "1px solid",
               }}
-              key={i}
-              className={data === courseSection ? "active" : ""}
-              onClick={() => changeCourseSection(data)}
             >
-              {data}
+              Copy HTML
             </button>
-          );
-        })}
+          </>
+        )}
       </div>
-      {body}
-      <button
-        onClick={() => getDataAndExport()}
-        style={{
-          width: "auto",
-          paddingLeft: "15px",
-          paddingRight: "15px",
-          height: "40px",
-          marginTop: "auto",
-          marginBottom: "auto",
-          marginLeft: "20px",
-          borderRadius: "5px",
-          border: "1px solid",
-        }}
-      >
-        Export Template
-      </button>
-      <button
-        onClick={() => (view ? setView(false) : setViewTemplate())}
-        style={{
-          width: "auto",
-          paddingLeft: "15px",
-          paddingRight: "15px",
-          height: "40px",
-          marginTop: "auto",
-          marginBottom: "auto",
-          marginLeft: "20px",
-          borderRadius: "5px",
-          border: "1px solid",
-        }}
-      >
-        {view ? "Generate Template" : "View Generated Template"}
-      </button>
-      <span className="popuptext" id="TextCopied">
-        Copied HTML content
-      </span>
-
-      <button
-        onClick={() => copyText()}
-        style={{
-          width: "auto",
-          paddingLeft: "15px",
-          paddingRight: "15px",
-          height: "40px",
-          marginTop: "auto",
-          marginBottom: "auto",
-          marginLeft: "20px",
-          borderRadius: "5px",
-          border: "1px solid",
-        }}
-      >
-        Copy HTML
-      </button>
     </div>
   );
 }

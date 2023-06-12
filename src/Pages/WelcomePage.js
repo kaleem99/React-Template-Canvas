@@ -1,13 +1,13 @@
 import WelcomePageComp from "Components/WelcomePageComp";
 import ViewTemplate from "Components/ViewTemplate";
 import { useState } from "react";
-function WelcomePage({ courseSection, view }) {
-  const [state, setState] = useState({
-    input1: "",
-    input2: "",
-    input3: "",
-    input4: "",
-  });
+function WelcomePage({ courseSection, view, setState, state }) {
+  // const [state, setState] = useState({
+  //   input1: "",
+  //   input2: "",
+  //   input3: "",
+  //   input4: "",
+  // });
   const changeStateValue = (e) => {
     const { name, value } = e.target;
     setState((prevState) => ({
@@ -16,16 +16,16 @@ function WelcomePage({ courseSection, view }) {
     }));
     console.log(state);
   };
-  const writeToFile = async () => {
-    // const result = exportedHtml(text, text2, videoLink, logo1, logo2);
-    const WelcomePageResult = WelcomePageComp(state);
-    console.log(WelcomePageResult);
-    localStorage.setItem(
-      "Welcome Page",
-      JSON.stringify({ text: WelcomePageResult })
-    );
-    // localStorage.setItem("html", JSON.stringify({ text: result }));
-  };
+  // const writeToFile = async () => {
+  //   // const result = exportedHtml(text, text2, videoLink, logo1, logo2);
+  //   const WelcomePageResult = WelcomePageComp(state);
+  //   console.log(WelcomePageResult);
+  //   localStorage.setItem(
+  //     "Welcome Page",
+  //     JSON.stringify({ text: WelcomePageResult })
+  //   );
+  //   // localStorage.setItem("html", JSON.stringify({ text: result }));
+  // };
   if (!view) {
     return (
       <>
@@ -39,8 +39,7 @@ function WelcomePage({ courseSection, view }) {
             margin: "2% auto",
           }}
         >
-          <div
-          >
+          <div>
             <img src="https://graphics.getsmarter.com/GS+email+signatures/Email+signature+tool/dist/img/g.jpg"></img>
           </div>
           <div
@@ -111,7 +110,7 @@ function WelcomePage({ courseSection, view }) {
             upper right corner of any page.
           </p>
         </div>
-        <button
+        {/* <button
           onClick={() => writeToFile()}
           style={{
             width: "auto",
@@ -126,7 +125,7 @@ function WelcomePage({ courseSection, view }) {
           }}
         >
           Save Template
-        </button>
+        </button> */}
       </>
     );
   } else {

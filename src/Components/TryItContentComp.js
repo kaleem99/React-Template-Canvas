@@ -9,9 +9,9 @@ const facultyBiographiesComp = (state, elementTypes) => {
       case "LearningOutcomes":
         orderedListIndex = 1;
         break;
-      case "Paragraph":
+      case "ContentBlock":
         result.innerHTML += `
-          <div style="width: 50%">
+          <div style="width: 100%;">
             <p>${stateValues[i]}</p>
           </div>
         `;

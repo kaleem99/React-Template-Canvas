@@ -2,6 +2,7 @@
   width: 100%;
   height: 1600px;
   margin: auto;
+  /* overflow: hidden; */
 }
 .HeaderImage {
   width: 50px;
@@ -173,9 +174,8 @@ button:hover {
   color: white;
   font-weight: bold;
 }
-button:focus-within {
-  /* Styles when button is clicked (focused) */
+/* button:focus-within {
   background-color: #063461;
   color: white;
   font-weight: bold;
-}
+} */
