@@ -12,6 +12,8 @@ import StudentSelfRecordingInstructions from "Pages/StudentSelfRecordingInstruct
 import FinalExamWeek from "Pages/CourseCompletion";
 import ViewLectureSlides from "Components/ViewTemplate";
 import addElement from "Components/AddElement";
+import EmbedPopupTool from "Components/EmbedPopupTool";
+
 const elementTypeNames = [
   // "LearningOutcomes",
   "ContentBlock",
@@ -39,7 +41,7 @@ function App() {
   const [index, setIndex] = useState(1);
   const [elementTypes, setElementTypes] = useState([]);
   const [select, setSelect] = useState("");
-
+  const [popup, setPopup] = useState(false);
   let body = "";
 
   const [courseSection, setCourseSection] = useState("Welcome Page");
@@ -142,12 +144,18 @@ function App() {
         console.log(err.message);
       });
   };
-  const copyText = () => {
+  const copyText = (textContent) => {
     console.log(document.getElementById("TextCopied"));
     document.getElementById("TextCopied").style.visibility = "visible";
-    navigator.clipboard.writeText(
-      JSON.parse(localStorage.getItem(courseSection, JSON)).text
-    );
+    document.getElementById("TextCopied").innerHTML = textContent;
+
+    if (textContent === "Copied HTML content") {
+      navigator.clipboard.writeText(
+        JSON.parse(localStorage.getItem(courseSection, JSON)).text
+      );
+    } else {
+      writeToFile();
+    }
     setTimeout(() => {
       document.getElementById("TextCopied").style.visibility = "hidden";
     }, 1000);
@@ -161,6 +169,7 @@ function App() {
   };
   return (
     <div className="App">
+      {popup && <EmbedPopupTool setPopup={setPopup} />}
       <div
         style={{
           width: "90%",
@@ -174,7 +183,7 @@ function App() {
       >
         <div
           style={{
-            height: "auto",
+            height: "40px",
             marginBottom: "auto",
             marginTop: "auto",
             width: "auto",
@@ -186,7 +195,7 @@ function App() {
           }}
         >
           {courseSection === "Try It Content" && (
-            <div style={{ position: "absolute" }}>
+            <div style={{ float: "left" }}>
               <select
                 onChange={(e) => setSelect(e.target.value)}
                 style={{
@@ -221,18 +230,7 @@ function App() {
                     handleChange
                   )
                 }
-                style={{
-                  width: "auto",
-                  paddingLeft: "15px",
-                  paddingRight: "15px",
-                  height: "40px",
-                  marginTop: "auto",
-                  marginBottom: "auto",
-                  marginLeft: "20px",
-                  borderRadius: "5px",
-                  border: "1px solid",
-                  float: "left",
-                }}
+                className="NavigationButtons"
               >
                 Add Element
               </button>
@@ -242,31 +240,35 @@ function App() {
           {sections.map((data, i) => {
             return (
               <button
-                style={{
-                  width: "auto",
-                  paddingLeft: "15px",
-                  paddingRight: "15px",
-                  height: "40px",
-                  marginTop: "auto",
-                  marginBottom: "auto",
-                  marginLeft: "20px",
-                  borderRadius: "5px",
-                  border: "1px solid",
-                }}
                 key={i}
-                className={data === courseSection ? "active" : ""}
+                style={{ float: "revert" }}
+                className={
+                  data === courseSection
+                    ? "active NavigationButtons"
+                    : "NavigationButtons"
+                }
                 onClick={() => changeCourseSection(data)}
               >
                 {data}
               </button>
             );
           })}
+          <button
+            onClick={() => setPopup(!popup)}
+            className="NavigationButtons"
+            style={{ float: "right" }}
+          >
+            Embed tool
+          </button>
         </div>
       </div>
       {body}
       <div style={{ width: "90%", margin: "auto", height: "100px" }}>
+        <span className="popuptext" id="TextCopied">
+          None
+        </span>
         <button
-          onClick={() => writeToFile()}
+          onClick={() => copyText("Template saved")}
           style={{
             width: "auto",
             paddingLeft: "15px",
@@ -316,10 +318,10 @@ function App() {
         {view && (
           <>
             <span className="popuptext" id="TextCopied">
-              Copied HTML content
+              None
             </span>
             <button
-              onClick={() => copyText()}
+              onClick={() => copyText("Copied HTML content")}
               style={{
                 width: "auto",
                 paddingLeft: "15px",
