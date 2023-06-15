@@ -37,8 +37,10 @@ const testing = async () => {
 };
 
 app.get("/", (req, res) => {
-  res.send({ data: "ok" });
+  console.log(process.env.BEARER_API_KEY);
+  res.send({ data: "ok", testing: process.env.BEARER_API_KEY });
 });
+// app.get("/get-token")
 // testing();
 // });
 // curl -X PUT -H 'Authorization: Bearer 20171~jYdCiwFisd1kJkLd8LuVui5iplxYE0pcHPw1H1JneIZ0cMLvYKzdUrLDmlHqNYcp' https://digitalcampus.beta.instructure.com/api/v1/courses/214/pages/New%20Page%20API%20Template -d wiki_page[body]=%3Cdiv%3E%0A%3Ch1%3ENew%20Course%20Heading%3C/h1%3E%0A%3Cbr%3E%3C/br%3E%0A%3Cbody%3E%0A%20%20Lorem%20Ipsum%20is%20simply%20dummy%20text%20of%20the%20printing%20and%20typesetting%20industry.%0A%3C/body%3E%0A%3C/div%3E
