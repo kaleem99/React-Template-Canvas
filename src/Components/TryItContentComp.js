@@ -66,7 +66,7 @@ const facultyBiographiesComp = (state, elementTypes) => {
     width: 90%;
     height: auto;
     padding: 20px;
-    border: 1px solid;
+    border: none;
     margin: 2% auto"
   >
   <div>

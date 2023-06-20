@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import exportedHtml from "./exportedHTML";
 import LectureSlides from "Pages/LectureSlides";
 import facultyBiographiesComp from "Components/TryItContentComp";
@@ -13,6 +13,9 @@ import FinalExamWeek from "Pages/CourseCompletion";
 import ViewLectureSlides from "Components/ViewTemplate";
 import addElement from "Components/AddElement";
 import EmbedPopupTool from "Components/EmbedPopupTool";
+import ViewGithubContent from "Pages/Github";
+import finalExamWeekComp from "Components/CourseCompletionComp";
+import AddFileName from "Components/AddFileName";
 
 const elementTypeNames = [
   // "LearningOutcomes",
@@ -34,7 +37,9 @@ function App() {
     // "CourseReadings",
     // "StudentSelfRecordingInstructions",
     "Course Completion",
+    "Github",
   ];
+  const [apiKey, setAPIKey] = useState("");
   const [view, setView] = useState(false);
   const [state, setState] = useState([]);
   const [bodyHtml, setBodyHtml] = useState([]);
@@ -42,13 +47,26 @@ function App() {
   const [elementTypes, setElementTypes] = useState([]);
   const [select, setSelect] = useState("");
   const [popup, setPopup] = useState(false);
-  let body = "";
-
   const [courseSection, setCourseSection] = useState("Welcome Page");
+  const [fileName, setFileName] = useState(false);
+  useEffect(() => {
+    const fetchApiKey = async () => {
+      const url = "https://express-template-backend.onrender.com/get-api-token";
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      const data = await response.json();
+      setAPIKey(data.key);
+    };
+    fetchApiKey();
+  }, []);
+  let body = "";
   const handleChange = (value, index) => {
     const newArrState = state;
     newArrState[index - 1] = value;
     setState(newArrState);
+    console.log(newArrState);
   };
   switch (courseSection) {
     case "LectureSlides":
@@ -94,27 +112,74 @@ function App() {
       );
       break;
     case "Course Completion":
-      body = <FinalExamWeek courseSection={courseSection} view={view} />;
+      body = (
+        <FinalExamWeek
+          state={state}
+          setState={setState}
+          courseSection={courseSection}
+          view={view}
+        />
+      );
+      break;
+    case "Github":
+      body = <ViewGithubContent apiKey={apiKey} />;
       break;
     default:
       body = <LectureSlides courseSection={courseSection} view={view} />;
       break;
   }
-  const getDataAndExport = () => {
-    let data = localStorage.getItem(courseSection, JSON);
-    data = JSON.parse(data);
-    if (data !== null) {
-      console.log(data.text);
-      fetch("https://express-template-backend.onrender.com/templates", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: data.text, templateName: courseSection }),
-      }).then((res) => console.log(res));
-      console.log("Template Saved.");
-    } else {
-      console.log("No Template saved");
+  const addFileName = () => {};
+  const getDataAndExport = async (fileName) => {
+    let fetchedData = localStorage.getItem(courseSection, JSON);
+    console.log(fetchedData);
+    fetchedData = JSON.parse(fetchedData);
+    // if (data !== null) {
+    //   console.log(data.text);
+    //   fetch("https://express-template-backend.onrender.com/templates", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ data: fetchedData.text, templateName: courseSection }),
+    //   }).then((res) => console.log(res));
+    //   console.log("Template Saved.");
+    // } else {
+    //   console.log("No Template saved");
+    // }
+
+    try {
+      let base64Data = btoa(unescape(encodeURIComponent(fetchedData.text)));
+      const responseResult = await fetch(
+        `https://api.github.com/repos/kaleem99/React-Template-Canvas-Content/contents/${fileName}.html`,
+        {
+          method: "PUT",
+          headers: {
+            Accept: "application/vnd.github+json",
+            Authorization: `Bearer ${apiKey}`,
+            "X-GitHub-Api-Version": "2022-11-28",
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: `{"message":"New File added","committer":{"name":"kaleem99","email":"kaleem99@github.com"},"content":"${base64Data}"}`,
+        }
+      );
+      const responseMessage = await responseResult.json();
+      console.log(responseMessage);
+      if (
+        responseMessage.message !== undefined &&
+        responseMessage.message.includes("sha")
+      ) {
+        alert(
+          responseMessage.message,
+          "File already exists, please rename the file before adding a new one"
+        );
+      } else {
+        alert("File has been uploaded successfully.");
+      }
+      console.log("API KEY Was retrieved successfully.");
+    } catch (error) {
+      console.error(error);
+      alert(error);
     }
   };
+
   const writeToFile = async () => {
     let result = "";
     console.log(courseSection);
@@ -123,6 +188,8 @@ function App() {
       result = WelcomePageComp(state);
     } else if (courseSection === "Try It Content") {
       result = facultyBiographiesComp(state, elementTypes);
+    } else if (courseSection === "Course Completion") {
+      result = finalExamWeekComp(state);
     }
     console.log(result);
     localStorage.setItem(
@@ -160,7 +227,7 @@ function App() {
       document.getElementById("TextCopied").style.visibility = "hidden";
     }, 1000);
   };
-  const setViewTemplate = () => {
+  const setViewTemplate = async () => {
     setView(true);
     setState([]);
     setBodyHtml([]);
@@ -169,6 +236,13 @@ function App() {
   };
   return (
     <div className="App">
+      {fileName && (
+        <AddFileName
+          getDataAndExport={getDataAndExport}
+          setFileName={setFileName}
+          fileName={fileName}
+        />
+      )}
       {popup && <EmbedPopupTool setPopup={setPopup} />}
       <div
         style={{
@@ -264,41 +338,47 @@ function App() {
       </div>
       {body}
       <div style={{ width: "90%", margin: "auto", height: "100px" }}>
-        <span className="popuptext" id="TextCopied">
-          None
-        </span>
-        <button
-          onClick={() => copyText("Template saved")}
-          style={{
-            width: "auto",
-            paddingLeft: "15px",
-            paddingRight: "15px",
-            height: "40px",
-            marginTop: "auto",
-            marginBottom: "auto",
-            marginLeft: "20px",
-            borderRadius: "5px",
-            border: "1px solid",
-          }}
-        >
-          Save Template
-        </button>
-        <button
-          onClick={() => getDataAndExport()}
-          style={{
-            width: "auto",
-            paddingLeft: "15px",
-            paddingRight: "15px",
-            height: "40px",
-            marginTop: "auto",
-            marginBottom: "auto",
-            marginLeft: "20px",
-            borderRadius: "5px",
-            border: "1px solid",
-          }}
-        >
-          Export Template
-        </button>
+        {!view && courseSection !== "Github" && (
+          <>
+            <span className="popuptext" id="TextCopied">
+              None
+            </span>
+            <button
+              onClick={() => copyText("Template saved")}
+              style={{
+                width: "auto",
+                paddingLeft: "15px",
+                paddingRight: "15px",
+                height: "40px",
+                marginTop: "auto",
+                marginBottom: "auto",
+                marginLeft: "20px",
+                borderRadius: "5px",
+                border: "1px solid",
+              }}
+            >
+              Save Template
+            </button>
+          </>
+        )}
+        {view && (
+          <button
+            onClick={() => setFileName(true)}
+            style={{
+              width: "auto",
+              paddingLeft: "15px",
+              paddingRight: "15px",
+              height: "40px",
+              marginTop: "auto",
+              marginBottom: "auto",
+              marginLeft: "20px",
+              borderRadius: "5px",
+              border: "1px solid",
+            }}
+          >
+            Export Template
+          </button>
+        )}
         <button
           onClick={() => (view ? setView(false) : setViewTemplate())}
           style={{

@@ -68,7 +68,7 @@ function FacultyBiographies({
             width: "90%",
             height: "auto",
             padding: "20px",
-            border: "1px solid",
+            // border: "1px solid",
             margin: "2% auto",
             minHeight: "300px",
           }}

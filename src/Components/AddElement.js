@@ -139,7 +139,14 @@ const addElement = (
       );
       break;
     default:
-      body.push("");
+      body.push(
+        <Paragraph
+          state={state}
+          index={index}
+          type={nameFormatted}
+          onChange={handleChange}
+        />
+      );
       break;
   }
   const result = body.map((component, index) => {

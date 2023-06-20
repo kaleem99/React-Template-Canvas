@@ -9,7 +9,12 @@ const ViewTemplate = ({ data, courseSection }) => {
 
   return (
     <div
-      style={{ width: "100%", height: "auto", margin: "auto" }}
+      style={{
+        width: "90%",
+        height: "auto",
+        margin: "auto",
+        border: "1px solid",
+      }}
       dangerouslySetInnerHTML={{ __html: result.text }}
     ></div>
   );

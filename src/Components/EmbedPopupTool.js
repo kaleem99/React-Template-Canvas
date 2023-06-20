@@ -19,6 +19,11 @@ const EmbedPopupTool = ({ setPopup }) => {
   const handleClick = () => {
     setPopup(false);
   };
+  const handleSelect = (value) => {
+    setSelect(value);
+    setSRCURL("");
+    setType("");
+  };
   switch (select) {
     case "Video":
     case "Image":
@@ -56,7 +61,7 @@ const EmbedPopupTool = ({ setPopup }) => {
       generated = (
         <iframe
           title="video"
-          style={{ border: "none", marginBottom: "20px" }}
+          style={{ border: "none" }}
           width={sizes.width}
           height={sizes.height}
           src={`${srcURL}`}
@@ -131,14 +136,14 @@ const EmbedPopupTool = ({ setPopup }) => {
           }}
         >
           <select
-            onChange={(e) => setSelect(e.target.value)}
+            onChange={(e) => handleSelect(e.target.value)}
             style={{
               width: "230px",
               height: "40px",
               borderRadius: "5px",
               float: "left",
               fontSize: "20px",
-              marginLeft: "3%"
+              marginLeft: "3%",
             }}
           >
             <option value={"None"} disabled selected>
@@ -201,3 +206,5 @@ const EmbedPopupTool = ({ setPopup }) => {
 };
 
 export default EmbedPopupTool;
+
+<iframe width="966" height="543" src="https://www.youtube.com/embed/LlCwHnp3kL4" title="Welcome to Cambridge!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

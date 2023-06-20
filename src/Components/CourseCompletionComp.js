@@ -1,4 +1,5 @@
 const finalExamWeekComp = (state) => {
+  console.log(state)
   const data = `<div
       class="CourseOverviewDiv"
       style="width: 90%; height: auto; padding: 20px; border: 1px solid; margin: 2% auto;"
@@ -31,17 +32,6 @@ const finalExamWeekComp = (state) => {
       <label>3.</label>
       <text>${state.input4}</text>
       <br></br>
-
-      <label>4.</label>
-      <text>${state.input5}</text>
-      <br></br>
-      <label>5.</label>
-      <text>${state.input6}</text>
-      <br></br>
-       
-      </div>
-      <div style="margin-top: 10px; width: 70%;">
-      <p>${state.input7}</p>
     </div>
     </div>
     </div>`;
