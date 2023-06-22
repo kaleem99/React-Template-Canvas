@@ -1,7 +1,37 @@
 import WelcomePageComp from "Components/WelcomePageComp";
 import ViewTemplate from "Components/ViewTemplate";
 import { useState } from "react";
+import Draggable from "react-draggable";
+const options = [
+  {
+    value:
+      "https://graphics.getsmarter.com/GS+email+signatures/Email+signature+tool/dist/img/g.jpg",
+    label: "GetSmarter",
+  },
+  {
+    value:
+      "https://drive.google.com/file/d/1QNtq_MREdN9Unbe8EaW87C4C6OBXKfK6/view",
+    label: "Arizona State University",
+  },
+  { value: "1w_CjyVhgxVH8FdbKRYj0-JZkL-OAiwmo", label: "Name 3" },
+  { value: "1xtY377CeY8Kz-KbIOSNC6caENdcvtrWm", label: "Name 4" },
+  { value: "1CMgy1VfQYIF2BQh__ApcHGDZvFscpqtD", label: "Name 5" },
+  { value: "1o1pUhn6s5v-br-gaLfTuM-f6hzI96Jcn", label: "Name 6" },
+  { value: "1emj1ZfCoC6QnzCsgRBB19XyiLbh4Y1VH", label: "Name 7" },
+  { value: "1ZKDGr2c200xseqpIzWTDmQVFFaVBgP-T", label: "Name 8" },
+  { value: "1oK0ahEcMw7S8wn14Hs2qyu41NbTy7ZvM", label: "Name 9" },
+  { value: "1NUmuuvhRuoTHD4pMEZmC6uVXaNy5NihE", label: "Name 10" },
+  { value: "1SbedZsRamCGb3F-mLaW48-TRQfb_OnRi", label: "Name 11" },
+  { value: "1RdXuhPk6v37uoCJbyfNRFts2HhrDY53v", label: "Name 12" },
+  { value: "1YPFwguudKlY7rR0EqkJ9jMvSjbLFVIbY", label: "Name 13" },
+  { value: "1rX4p9hKxQzTGIlHpJ4vEP_mLMZ1dbdJ8", label: "Name 14" },
+  { value: "1wyJwe-zu5y9heY9rRjE_2q40qE8_I6rq", label: "Name 15" },
+];
 function WelcomePage({ courseSection, view, setState, state }) {
+  const [imageSelect, setImageSelect] = useState(false);
+  const [image, setImage] = useState(
+    "https://graphics.getsmarter.com/GS+email+signatures/Email+signature+tool/dist/img/g.jpg"
+  );
   // const [state, setState] = useState({
   //   input1: "",
   //   input2: "",
@@ -9,10 +39,11 @@ function WelcomePage({ courseSection, view, setState, state }) {
   //   input4: "",
   // });
   const changeStateValue = (e) => {
-    const { name, value } = e.target;
+    const { name, value, innerHTML, className } = e.target;
+    console.log(name, value, innerHTML, className);
     setState((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name || className]: value || innerHTML,
     }));
     console.log(state);
   };
@@ -26,9 +57,42 @@ function WelcomePage({ courseSection, view, setState, state }) {
   //   );
   //   // localStorage.setItem("html", JSON.stringify({ text: result }));
   // };
+  const selectUPLogo = () => {
+    return (
+      <Draggable>
+        <div
+          style={{
+            position: "absolute",
+            right: 0,
+            left: 0,
+            margin: "auto",
+            width: "300px",
+            height: "100px",
+            border: "1px solid",
+            borderRadius: "5px",
+            textAlign: "center",
+            padding: "10px",
+            background: "white",
+          }}
+          onDoubleClick={() => setImageSelect(false)}
+        >
+          <h3>Select University Partner Logo</h3>
+          <select
+            onChange={(e) => setImage(e.target.value)}
+            style={{ width: "200px", height: "40px" }}
+          >
+            {options.map((data) => (
+              <option value={data.value}>{data.label}</option>
+            ))}
+          </select>
+        </div>
+      </Draggable>
+    );
+  };
   if (!view) {
     return (
       <>
+        {imageSelect && selectUPLogo()}
         <div
           className="Welcome PageDiv"
           style={{
@@ -39,17 +103,14 @@ function WelcomePage({ courseSection, view, setState, state }) {
             margin: "2% auto",
           }}
         >
-          <div>
-            <img src="https://graphics.getsmarter.com/GS+email+signatures/Email+signature+tool/dist/img/g.jpg"></img>
-          </div>
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "auto auto",
-              width: "400px",
+              width: "530px",
             }}
           >
-            <h1 style={{ color: "#E52370" }}>Welcome To </h1>
+            <h1 style={{ color: "#00262B" }}>Welcome To Try It:</h1>
             <input
               style={{
                 width: "200px",
@@ -63,36 +124,50 @@ function WelcomePage({ courseSection, view, setState, state }) {
               placeholder="[Insert try it title]"
             />
           </div>
-          <h1>Welcome to the course</h1>
-          <p>Welcome!</p>
-          <p>
-            Thank you for joining this Try It course. This course is a portion
-            of a module in the full{" "}
-            <input
-              style={{ width: "180px", height: "30px" }}
-              placeholder="[insert UP name]"
-              name="input2"
-              value={state.input2}
-              onChange={changeStateValue}
-            />{" "}
-            <input
-              style={{ width: "180px", height: "30px" }}
-              placeholder="[insert Executive Education course name]"
-              name="input3"
-              value={state.input3}
-              onChange={changeStateValue}
-            />{" "}
-            course. After completing this Try It course, you’ll be able to:
-          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "auto auto" }}>
+            <div style={{ width: "70%" }}>
+              <h1 style={{ color: "#002D58" }}>Welcome to the course</h1>
+              <p>
+                Thank you for joining this Try It course. This course is a
+                portion of a module in the full{" "}
+                <input
+                  style={{ width: "180px", height: "30px" }}
+                  placeholder="[insert UP name]"
+                  name="input2"
+                  value={state.input2}
+                  onChange={changeStateValue}
+                />{" "}
+                <input
+                  style={{ width: "180px", height: "30px" }}
+                  placeholder="[insert Executive Education course name]"
+                  name="input3"
+                  value={state.input3}
+                  onChange={changeStateValue}
+                />{" "}
+                course. After completing this Try It course, you'll be able to:
+              </p>
+            </div>
+            <div>
+              <img onDoubleClick={() => setImageSelect(true)} src={image}></img>
+            </div>
+          </div>
           <ul>
             <li>
-              <input
-                style={{ width: "180px", height: "30px" }}
+              <div
+                style={{
+                  maxWidth: "auto",
+                  minWidth: "30%",
+                  height: "auto",
+                  minHeight: "50px",
+                  border: "0.5px solid",
+                }}
+                contentEditable
                 placeholder=" [insert unit outcome] "
                 name="input4"
-                value={state.input4}
-                onChange={changeStateValue}
-              />
+                className="input4"
+                dangerouslySetInnerHTML={{ __html: "Insert Learning Outcomes" }}
+                onInput={changeStateValue}
+              ></div>
             </li>
           </ul>
           <p>

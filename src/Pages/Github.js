@@ -60,6 +60,7 @@ function ViewGithubContent({ apiKey }) {
         }
       );
       console.log(result);
+      alert("file content has been updated.");
     } catch (err) {
       alert(err);
     }

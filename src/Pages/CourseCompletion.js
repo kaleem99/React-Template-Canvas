@@ -62,7 +62,7 @@ const DragAndDrop = () => {
 function FinalExamWeek({ courseSection, view, state, setState }) {
   const [banner, setBanner] = useState("");
   const placeholders = [
-    "course completion text",
+    "Next Steps text",
     "reminders and suggestions",
     "reminders and suggestions",
     "reminders and suggestions",
@@ -102,10 +102,9 @@ function FinalExamWeek({ courseSection, view, state, setState }) {
             margin: "2% auto",
           }}
         >
-          <div>
-            <img src="https://graphics.getsmarter.com/GS+email+signatures/Email+signature+tool/dist/img/g.jpg"></img>
-          </div>
-          <h1 style={{ color: "#E52370" }}>Course completion!</h1>
+          <h1 style={{ color: "#002D58" }}>
+            Congratulations on completing the Try It course!
+          </h1>
           <div
             className="LectureSlides"
             style={{
@@ -116,59 +115,84 @@ function FinalExamWeek({ courseSection, view, state, setState }) {
               margin: "auto",
             }}
           >
-            <h2>Completion page</h2>
-            <textarea
-              // placeholder={placeholders[i]}
-              style={{
-                marginTop: "10px",
-                width: "400px",
-                height: "50px",
-              }}
-              name={`input1`}
-              value={state.input1}
-              onChange={handleChange}
-            />
-            <br></br>
-            <label>1. </label>
-            <textarea
-              // placeholder={placeholders[i]}
-              style={{
-                marginTop: "10px",
-                width: "400px",
-                height: "50px",
-              }}
-              name={`input2`}
-              value={state.input2}
-              onChange={handleChange}
-            />
-            <br></br>
+            <p>
+              Whether you’re looking to advance at your current organization or
+              shift fields entirely, you’ve taken a valuable step toward
+              enhancing your skill set and advancing your career.
+            </p>
 
-            <label>2. </label>
-            <textarea
-              // placeholder={placeholders[i]}
+            <ul>
+              <li>
+                <b>Learning your way</b> — Now that you’ve completed the Try It,
+                discover the power of self-paced learning.
+              </li>
+              <li>
+                <b>Build on your momentum</b> — You’ve taken the first step
+                toward growing your skill set and investing in your future.
+                Ready to continue your learning journey and expand on your
+                expertise?
+              </li>
+            </ul>
+            <b>Upskill with this online program, recommended just for you.</b>
+            <div
               style={{
-                marginTop: "10px",
-                width: "400px",
-                height: "50px",
+                display: "grid",
+                gridTemplateColumns: "auto auto",
+                width: "450px",
               }}
-              name={`input3`}
-              value={state.input3}
-              onChange={handleChange}
-            />
-            <br></br>
-            <label>3. </label>
-            <textarea
-              // placeholder={placeholders[i]}
-              style={{
-                marginTop: "10px",
-                width: "400px",
-                height: "50px",
-              }}
-              name={`input4`}
-              value={state.input4}
-              onChange={handleChange}
-            />
-            <h2 style={{ color: "#1475D4" }}>Course ending Text</h2>
+            >
+              <p>Discover </p>
+              <input
+                name="input1"
+                className="input2"
+                placeholder="[EXEC ED COURSE TITLE]"
+                onChange={handleChange}
+              />
+            </div>
+            <div style={{ width: "450px" }}>
+              <input
+                className="input2"
+                name="input2"
+                placeholder="[BRIEF COURSE DESCRIPTION] "
+                onChange={handleChange}
+              />
+            </div>
+            <div style={{ width: "70%" }}>
+              <p>
+                Ready to dive into{" "}
+                <input
+                  style={{ width: "180px", height: "30px" }}
+                  className="input2"
+                  placeholder="[Exec Ed course title]"
+                  name="input3"
+                  value={state.input3}
+                  onChange={handleChange}
+                />{" "}
+                , or still have questions? Click here and enter your information
+                to enroll or learn more about this course from GetSmarter (an
+                edX partner). course. After completing this Try It course,
+                you'll be able to:
+              </p>
+            </div>
+            <b>Executive Education Learning Experience</b>
+            <p>
+              Explore Executive Education's learning experience — flexible,
+              fully supported cohort-based learning, designed for the busy
+              professional, as outlined in the video below.
+            </p>
+            <iframe
+              width="1008"
+              height="567"
+              src="https://www.youtube.com/embed/329IDa3GYXs"
+              title="Face change with GetSmarter by your side"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+            <p>
+              <b>Video 1:</b> Explore Executive Education's learning experience.
+            </p>
+            <h3>End of course survey</h3>
           </div>
         </div>
       </>

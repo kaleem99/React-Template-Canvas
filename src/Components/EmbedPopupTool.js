@@ -11,11 +11,16 @@ const EmbedPopupTool = ({ setPopup }) => {
   const [select, setSelect] = useState("");
   const [type, setType] = useState("");
   const [srcURL, setSRCURL] = useState("");
+  const [position, setPosition] = useState("Center");
+  const [imagePosition, setImagePosition] = useState({
+    display: "block",
+    margin: " 0 auto",
+  });
   const [sizes, setSizes] = useState({
     width: "100",
     height: "50",
   });
-
+  const ImagePositions = ["Left", "Center", "Right"];
   const handleClick = () => {
     setPopup(false);
   };
@@ -49,6 +54,7 @@ const EmbedPopupTool = ({ setPopup }) => {
     case "Image":
       generated = (
         <img
+          style={imagePosition}
           width={sizes.width}
           height={sizes.height}
           alt=""
@@ -72,6 +78,30 @@ const EmbedPopupTool = ({ setPopup }) => {
       generated = "";
       break;
   }
+  const changeImagePos = (pos) => {
+    setPosition(pos);
+    switch (pos) {
+      case "Center":
+        setImagePosition({ display: "block", margin: " 0 auto" });
+        break;
+      case "Left":
+        setImagePosition({
+          display: "block",
+          marginLeft: "0",
+          marginRight: "auto",
+        });
+        break;
+      case "Right":
+        setImagePosition({
+          display: "block",
+          marginLeft: "auto",
+          marginRight: "0",
+        });
+        break;
+      default:
+        break;
+    }
+  };
   function copyImageElementAsText() {
     let imageElement = document.getElementsByClassName("GeneratedEmbedCode")[0];
     console.log(imageElement);
@@ -160,6 +190,34 @@ const EmbedPopupTool = ({ setPopup }) => {
           <div className="GeneratedEmbedCode">{generated}</div>
           {type !== "" && (
             <div style={{ padding: 10, width: "90%", margin: "auto" }}>
+              <div class="btnGroup">
+                {ImagePositions.map((pos, i) => (
+                  <button
+                    id="btnPositions"
+                    onClick={() => changeImagePos(pos)}
+                    // class="selected"
+                    style={
+                      position === pos
+                        ? {
+                            background: "#173461",
+                            width: "100px",
+                            height: "30px",
+                            borderRadius: "5px",
+                            color: "white",
+                            border: "none",
+                          }
+                        : {
+                            width: "100px",
+                            height: "30px",
+                            borderRadius: "5px",
+                            border: "1px solid",
+                          }
+                    }
+                  >
+                    {pos}
+                  </button>
+                ))}
+              </div>
               <h3>Width</h3>
               <input
                 type="number"
@@ -207,4 +265,12 @@ const EmbedPopupTool = ({ setPopup }) => {
 
 export default EmbedPopupTool;
 
-<iframe width="966" height="543" src="https://www.youtube.com/embed/LlCwHnp3kL4" title="Welcome to Cambridge!" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe
+  width="966"
+  height="543"
+  src="https://www.youtube.com/embed/LlCwHnp3kL4"
+  title="Welcome to Cambridge!"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen
+></iframe>;

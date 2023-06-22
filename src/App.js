@@ -36,7 +36,7 @@ function App() {
     "Try It Content",
     // "CourseReadings",
     // "StudentSelfRecordingInstructions",
-    "Course Completion",
+    "Next Steps",
     "Github",
   ];
   const [apiKey, setAPIKey] = useState("");
@@ -111,7 +111,7 @@ function App() {
         />
       );
       break;
-    case "Course Completion":
+    case "Next Steps":
       body = (
         <FinalExamWeek
           state={state}
@@ -188,7 +188,7 @@ function App() {
       result = WelcomePageComp(state);
     } else if (courseSection === "Try It Content") {
       result = facultyBiographiesComp(state, elementTypes);
-    } else if (courseSection === "Course Completion") {
+    } else if (courseSection === "Next Steps") {
       result = finalExamWeekComp(state);
     }
     console.log(result);
