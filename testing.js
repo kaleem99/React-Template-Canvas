@@ -196,7 +196,7 @@ class Playground extends Component {
 
   render() {
     console.log("state", this.state);
-
+    
     return (
       <View style={styles.container}>
         {this.state.items.map((i, index) => (

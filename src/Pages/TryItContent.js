@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ViewTemplate from "Components/ViewTemplate";
-
+import Paragraph from "TryItContentComponents/Paragraph";
 function FacultyBiographies({
   courseSection,
   view,
@@ -14,6 +14,7 @@ function FacultyBiographies({
   setElementTypes,
   select,
   setSelect,
+  handleChange,
 }) {
   const [drag, setDrag] = useState("");
   const [drop, setDrop] = useState("");
@@ -51,7 +52,7 @@ function FacultyBiographies({
     let temp = newDataArr3[drag];
     newDataArr3[drag] = newDataArr3[drop];
     newDataArr3[drop] = temp;
-    setElementTypes(newDataArr3);
+    // setElementTypes(newDataArr3);
   };
   if (drag !== "" && drop !== "") {
     changeElementPositions();
@@ -96,7 +97,14 @@ function FacultyBiographies({
               margin: "auto",
             }}
           >
-            {bodyHtml}
+            <Paragraph
+              state={state}
+              index={index}
+              type={courseSection
+                .replace(/([a-z])([A-Z])/g, "$1 $2")
+                .toLowerCase()}
+              onChange={handleChange}
+            />
           </div>
         </div>
       </>

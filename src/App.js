@@ -44,7 +44,7 @@ function App() {
   const [state, setState] = useState([]);
   const [bodyHtml, setBodyHtml] = useState([]);
   const [index, setIndex] = useState(1);
-  const [elementTypes, setElementTypes] = useState([]);
+  const [elementTypes, setElementTypes] = useState(["ContentBlock"]);
   const [select, setSelect] = useState("");
   const [popup, setPopup] = useState(false);
   const [courseSection, setCourseSection] = useState("Welcome Page");
@@ -97,6 +97,8 @@ function App() {
           setBodyHtml={setBodyHtml}
           elementTypes={elementTypes}
           setElementTypes={setElementTypes}
+          handleChange={handleChange}
+          // nameFormatted={name}
         />
       );
       break;
@@ -232,7 +234,7 @@ function App() {
     setState([]);
     setBodyHtml([]);
     setIndex(1);
-    setElementTypes([]);
+    // setElementTypes([]);
   };
   return (
     <div className="App">
@@ -268,7 +270,7 @@ function App() {
             backgroundColor: "white",
           }}
         >
-          {courseSection === "Try It Content" && (
+          {/* {courseSection === "Try It Content" && (
             <div style={{ float: "left" }}>
               <select
                 onChange={(e) => setSelect(e.target.value)}
@@ -309,8 +311,7 @@ function App() {
                 Add Element
               </button>
             </div>
-          )}
-          {/* <h2>{select.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase()}</h2> */}
+          )} */}
           {sections.map((data, i) => {
             return (
               <button

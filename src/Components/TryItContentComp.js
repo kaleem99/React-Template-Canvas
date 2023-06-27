@@ -10,11 +10,7 @@ const facultyBiographiesComp = (state, elementTypes) => {
         orderedListIndex = 1;
         break;
       case "ContentBlock":
-        result.innerHTML += `
-          <div style="width: 100%;">
-            <p>${stateValues[i]}</p>
-          </div>
-        `;
+        result.innerHTML += stateValues[i];
         orderedListIndex = 1;
         break;
       case "Image":
@@ -69,9 +65,6 @@ const facultyBiographiesComp = (state, elementTypes) => {
     border: none;
     margin: 2% auto"
   >
-  <div>
-  <img src="https://graphics.getsmarter.com/GS+email+signatures/Email+signature+tool/dist/img/g.jpg"></img>
-</div>
   ${result.innerHTML}
   </div>
 `;

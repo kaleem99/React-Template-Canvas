@@ -5,7 +5,6 @@ const finalExamWeekComp = (state) => {
     width: 90%;
     height: auto;
     padding: 20px;
-    border: 1px solid;
     margin: 2% auto;
   "
 >
@@ -50,7 +49,7 @@ const finalExamWeekComp = (state) => {
       outlined in the video below.
     </p>
     <iframe
-      width="1008"
+      width="100%"
       height="567"
       src="https://www.youtube.com/embed/329IDa3GYXs"
       title="Face change with GetSmarter by your side"
