@@ -88,8 +88,6 @@ function FinalExamWeek({ courseSection, view, state, setState }) {
     );
     // localStorage.setItem("html", JSON.stringify({ text: result }));
   };
-  console.log(state);
-
   if (!view) {
     return (
       <>
@@ -149,7 +147,7 @@ function FinalExamWeek({ courseSection, view, state, setState }) {
                 onChange={handleChange}
               />
             </div>
-            <div style={{ width: "450px" }}>
+            <div style={{ width: "450px", height: "auto" }}>
               <input
                 className="input2"
                 name="input2"
@@ -168,10 +166,18 @@ function FinalExamWeek({ courseSection, view, state, setState }) {
                   value={state.input3}
                   onChange={handleChange}
                 />{" "}
-                , or still have questions? Click here and enter your information
-                to enroll or learn more about this course from GetSmarter (an
-                edX partner). course. After completing this Try It course,
-                you'll be able to:
+                , or still have questions?{" "}
+                <input
+                  placeholder="Click here [hyperlink]"
+                  name="input4"
+                  className="input2"
+                  style={{ width: "180px", height: "30px" }}
+                  value={state.input4}
+                  onChange={handleChange}
+                />{" "}
+                and enter your information to enroll or learn more about this
+                course from GetSmarter (an edX partner). course. After
+                completing this Try It course, you'll be able to:
               </p>
             </div>
             <b>Executive Education Learning Experience</b>

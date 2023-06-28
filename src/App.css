@@ -138,7 +138,7 @@ p {
   height: 25px;
   margin-top: 5px;
   font-size: large;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 .active {
   background-color: #1176d3;

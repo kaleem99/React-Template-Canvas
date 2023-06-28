@@ -37,7 +37,8 @@ const finalExamWeekComp = (state) => {
     <div style="width: 70%">
       <p>
         Ready to dive into
-        ${state.input3}, or still have questions? Click here and enter your information to
+        ${state.input3}, or still have questions? <a href=${state.input4}>Click here</a>
+        and enter your information to
         enroll or learn more about this course from GetSmarter (an edX partner).
         course. After completing this Try It course, you'll be able to:
       </p>
