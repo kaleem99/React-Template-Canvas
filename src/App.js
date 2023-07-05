@@ -63,10 +63,45 @@ function App() {
   }, []);
   let body = "";
   const handleChange = (value, index) => {
+    if (courseSection === "Try It Content") {
+      var parser = new DOMParser();
+
+      // Parse the HTML string
+      var doc = parser.parseFromString(value, "text/html");
+      let aTags = doc.getElementsByTagName("a");
+      const elements = doc.getElementsByTagName("*");
+
+      // Remove backgroundColor from each element
+      let pElements = doc.getElementsByTagName("p");
+      for (let i = 0; i < pElements.length; i++) {
+        pElements[i].style.fontSize = "16px";
+        let children = pElements[i].children;
+        for (let j = 0; j < children.length; j++) {
+          if (children[j].nodeType === Node.ELEMENT_NODE) {
+            children[j].style.fontSize = "16px";
+          }
+        }
+      }
+      for (let i = 0; i < elements.length; i++) {
+        elements[i].style.color = "";
+        elements[i].style.backgroundColor = "";
+        // console.log(elements[i])
+      }
+      for (let i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute("target", "_blank");
+        let children = aTags[i].children;
+        for (let j = 0; j < children.length; j++) {
+          if (children[j].nodeType === Node.ELEMENT_NODE) {
+            children[j].style.fontSize = "16px";
+          }
+        }
+      }
+      value = doc.getElementsByTagName("body")[0].innerHTML;
+    }
+    document.getElementById("editableDiv").innerHTML = value;
     const newArrState = state;
     newArrState[index - 1] = value;
     setState(newArrState);
-    console.log(newArrState);
   };
   switch (courseSection) {
     case "LectureSlides":
@@ -396,29 +431,27 @@ function App() {
         >
           {view ? "Generate Template" : "View Generated Template"}
         </button>
-        {view && (
-          <>
-            <span className="popuptext" id="TextCopied">
-              None
-            </span>
-            <button
-              onClick={() => copyText("Copied HTML content")}
-              style={{
-                width: "auto",
-                paddingLeft: "15px",
-                paddingRight: "15px",
-                height: "40px",
-                marginTop: "auto",
-                marginBottom: "auto",
-                marginLeft: "20px",
-                borderRadius: "5px",
-                border: "1px solid",
-              }}
-            >
-              Copy HTML
-            </button>
-          </>
-        )}
+        <>
+          <span className="popuptext" id="TextCopied">
+            None
+          </span>
+          <button
+            onClick={() => copyText("Copied HTML content")}
+            style={{
+              width: "auto",
+              paddingLeft: "15px",
+              paddingRight: "15px",
+              height: "40px",
+              marginTop: "auto",
+              marginBottom: "auto",
+              marginLeft: "20px",
+              borderRadius: "5px",
+              border: "1px solid",
+            }}
+          >
+            Copy HTML
+          </button>
+        </>
       </div>
     </div>
   );

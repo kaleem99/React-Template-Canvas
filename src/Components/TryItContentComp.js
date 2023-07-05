@@ -58,13 +58,6 @@ const facultyBiographiesComp = (state, elementTypes) => {
     }
   }
   const data = `<div
-  style="
-    width: 90%;
-    height: auto;
-    padding: 20px;
-    border: none;
-    margin: 2% auto"
-  >
   ${result.innerHTML}
   </div>
 `;

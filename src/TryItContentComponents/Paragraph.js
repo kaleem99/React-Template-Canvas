@@ -1,3 +1,4 @@
+import Draggable from "react-draggable";
 function Paragraph({ type, index, onChange, state }) {
   return (
     <div>
@@ -16,7 +17,8 @@ function Paragraph({ type, index, onChange, state }) {
         name={"input" + index}
         className={`inputs`}
         key={index}
-        contenteditable="true"
+        id="editableDiv"
+        contentEditable="true"
       ></div>
     </div>
   );

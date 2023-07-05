@@ -2,6 +2,8 @@ import WelcomePageComp from "Components/WelcomePageComp";
 import ViewTemplate from "Components/ViewTemplate";
 import { useState } from "react";
 import Draggable from "react-draggable";
+import { IoIosCloseCircle } from "react-icons/io";
+
 const options = [
   {
     value:
@@ -76,6 +78,17 @@ function WelcomePage({ courseSection, view, setState, state }) {
           }}
           onDoubleClick={() => setImageSelect(false)}
         >
+          <p
+            style={{
+              position: "absolute",
+              top: "-25px",
+              right: "1px",
+              fontSize: "25px",
+            }}
+            onClick={() => setImageSelect(false)}
+          >
+            <IoIosCloseCircle />
+          </p>
           <h3>Select University Partner Logo</h3>
           <select
             onChange={(e) => setImage(e.target.value)}
@@ -103,7 +116,7 @@ function WelcomePage({ courseSection, view, setState, state }) {
             margin: "2% auto",
           }}
         >
-          <div
+          {/* <div
             style={{
               display: "grid",
               gridTemplateColumns: "auto auto",
@@ -123,7 +136,7 @@ function WelcomePage({ courseSection, view, setState, state }) {
               value={state.input1}
               placeholder="[Insert try it title]"
             />
-          </div>
+          </div> */}
           <div style={{ display: "grid", gridTemplateColumns: "auto auto" }}>
             <div style={{ width: "70%" }}>
               <h1 style={{ color: "#002D58" }}>Welcome to the course</h1>

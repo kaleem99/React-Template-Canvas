@@ -14,6 +14,7 @@ const ViewTemplate = ({ data, courseSection }) => {
         height: "auto",
         margin: "auto",
         border: "1px solid",
+        paddingLeft: "20px",
       }}
       dangerouslySetInnerHTML={{ __html: result.text }}
     ></div>
