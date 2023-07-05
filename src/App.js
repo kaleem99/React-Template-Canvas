@@ -61,6 +61,7 @@ function App() {
     };
     fetchApiKey();
   }, []);
+
   let body = "";
   const handleChange = (value, index) => {
     if (courseSection === "Try It Content") {
@@ -85,6 +86,17 @@ function App() {
       for (let i = 0; i < elements.length; i++) {
         elements[i].style.color = "";
         elements[i].style.backgroundColor = "";
+        console.log(elements[i].tagName);
+        if (
+          (elements[i].tagName === "SPAN" ||
+            elements[i].tagName === "H1" ||
+            elements[i].tagName === "H2" ||
+            elements[i].tagName === "H3" ||
+            elements[i].tagName === "H4") &&
+          !elements[i].id.includes("docs")
+        ) {
+          elements[i].setAttribute("ondblclick", `testingData(this)`);
+        }
         // console.log(elements[i])
       }
       for (let i = 0; i < aTags.length; i++) {
