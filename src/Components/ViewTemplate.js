@@ -6,7 +6,10 @@ const ViewTemplate = ({ data, courseSection }) => {
   if (result === null) {
     result = { text: "No template to show" };
   }
-
+  const setEditible = (element) => {
+    console.log(element);
+    element.target.contentEditable = true;
+  };
   return (
     <div
       style={{
@@ -14,8 +17,11 @@ const ViewTemplate = ({ data, courseSection }) => {
         height: "auto",
         margin: "auto",
         border: "1px solid",
-        paddingLeft: "20px",
+        padding: "20px",
       }}
+      id="ViewTemplate"
+      contentEditable={false}
+      onDoubleClick={(e) => setEditible(e)}
       dangerouslySetInnerHTML={{ __html: result.text }}
     ></div>
   );

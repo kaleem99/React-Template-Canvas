@@ -86,9 +86,8 @@ function App() {
       for (let i = 0; i < elements.length; i++) {
         elements[i].style.color = "";
         elements[i].style.backgroundColor = "";
-        console.log(elements[i].tagName);
         if (
-          (elements[i].tagName === "SPAN" ||
+          (elements[i].tagName === "P" ||
             elements[i].tagName === "H1" ||
             elements[i].tagName === "H2" ||
             elements[i].tagName === "H3" ||
@@ -264,10 +263,12 @@ function App() {
     console.log(document.getElementById("TextCopied"));
     document.getElementById("TextCopied").style.visibility = "visible";
     document.getElementById("TextCopied").innerHTML = textContent;
-
+    console.log(textContent, view)
     if (textContent === "Copied HTML content") {
       navigator.clipboard.writeText(
-        JSON.parse(localStorage.getItem(courseSection, JSON)).text
+        // JSON.parse(localStorage.getItem(courseSection, JSON)).text
+        document.getElementById(!view ? "editableDiv" : "ViewTemplate")
+          .innerHTML
       );
     } else {
       writeToFile();

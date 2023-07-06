@@ -1,92 +1,37 @@
 import Draggable from "react-draggable";
 import { useEffect, useState } from "react";
+import { DivContent, ScriptContent } from "./HTMLContent";
 function Paragraph({ type, index, onChange, state }) {
   const [num, setNum] = useState(0);
   useEffect(() => {
     if (num === 0) {
       const div = document.createElement("div");
 
-      div.innerHTML = `<Draggable><div
-      style="
-      width: 300px;
-      height: 40%;
-      border: 1px solid;
-      position: absolute;
-      background: white;
-      display: none;
-      padding: 10px;
-      border-radius: 10px;
-      top: 50%;
-      right: 0%"
-      id="DivA"
-      class="None"
-    >
-    <h3 onclick="document.getElementById('DivA').style.display = 'none';" style="position: absolute; right: 0px; top: 0px;">Close</h3>
-    <h3>Format HTML Content</h3>
-    <label>Font Size:</label>
-      <input
-      onchange="handleChange(this)"
-        type="number"
-        style="
-      width: 50px;
-   "
-        value="10"
-        id="pixels"
-        name="pixels"
-        min="1"
-        max="50"
-      /><text> px</text>
-      <br>
-      <input onchange="boldElement(this)" type="checkbox" id="Bold" name="Bold" value="Bold">
-      <label for="Bold">Bold</label><br>
-      <input onchange="italicElement(this)" type="checkbox" id="Italic" name="Italic" value="Italic">
-      <label for="Italic">Italic</label><br>
-    </div></Draggable>`;
+      div.innerHTML = DivContent;
       const scriptElement = document.createElement("script");
-      scriptElement.innerHTML = `
-      chosenElement = "";
+      const script2 = document.createElement("script");
+      script2.src = "http://code.jquery.com/jquery-2.1.0.min.js";
+      script2.onload = loadJQueryUI;
+      function loadJQueryUI() {
+        const link = document.createElement("link");
+        link.href =
+          "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css";
 
-      function testingData(element) {
-        chosenElement = element
-        document.getElementById("pixels").value = chosenElement.style.fontSize.split("px")[0];
-        const boldElement = document.getElementById("Bold"); 
-        const italicElement = document.getElementById("Italic")
-        if(chosenElement.style.fontWeight >= 400){
-          boldElement.checked = true;
-        }
-        else{
-          boldElement.checked = false;
-        }
-          let newElement = document.getElementById("DivA")
-          newElement.style.display = "block"
-        if(chosenElement.style.fontStyle === "italic"){
-          italicElement.checked = true;
-        }
-        else{
-          italicElement.checked = false;
-        }
-        }function handleChange(element){
-          chosenElement.style.fontSize = element.value + "px";
+        const script3 = document.createElement("script");
+        script3.src =
+          "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js";
+        script3.onload = initializeDraggable;
 
-        }
-        function boldElement(element){
-          if(element.checked === false){
-            chosenElement.style.fontWeight = "normal";
-          }else{
-            chosenElement.style.fontWeight = "bold";
-          }
-        }
-        function italicElement(element){
-          if(element.checked === false){
-            chosenElement.style.fontStyle = "normal";
-          }else{
-            chosenElement.style.fontStyle = "italic";
-          }
-        }
-        `;
-
-      document.body.appendChild(scriptElement);
+        document.body.appendChild(link);
+        document.body.appendChild(script3);
+      }
+      function initializeDraggable() {
+        scriptElement.innerHTML = ScriptContent;
+        document.body.appendChild(scriptElement);
+      }
+      document.body.appendChild(script2);
       document.body.appendChild(div);
+
       setNum(num + 1);
     }
   }, []);
