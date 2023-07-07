@@ -1,5 +1,5 @@
 const finalExamWeekComp = (state) => {
-  console.log(state);
+  console.log(state.urlLink);
   const data = `<div
   style="
     width: 90%;
@@ -29,15 +29,21 @@ const finalExamWeekComp = (state) => {
       </li>
     </ul>
     <b>Upskill with this online program, recommended just for you.</b>
-      <p>Discover ${state.input1}
+      <p>Discover ${
+        state.urlLink === undefined || state.urlLink === ""
+          ? state.input1
+          : `<a href="${state.urlLink}" target="_blank">${state.input1}</a>`
+      }
     </div>
-    <div style="width: 70%">
+    <div style="width: auto">
         <p>${state.input2}</p>   
     </div>
-    <div style="width: 70%">
+    <div style="width: auto">
       <p>
         Ready to dive into
-        ${state.input3}, or still have questions? <a href=${state.input4}>Click here</a>
+        ${state.input3}, or still have questions? <a href=${
+    state.input4
+  } target="_blank">Click here</a>
         and enter your information to
         enroll or learn more about this course from GetSmarter (an edX partner).
         course. After completing this Try It course, you'll be able to:

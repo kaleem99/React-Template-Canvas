@@ -1,38 +1,165 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <script
-      src="https://cdn.tiny.cloud/1/m7lqehnj6vkocl1oppgipc05gomxd21yb3ksilyr4ttljt9j/tinymce/6/tinymce.min.js"
-      referrerpolicy="origin"
-    ></script>
-  </head>
-  <body class="Body">
-    <textarea id="Tgsvd">
-    Welcome to TinyMCE!
-  </textarea
-    >
-    <script>
-      tinymce.init({
-        selector: "textarea",
-        plugins:
-          "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss",
-        toolbar:
-          "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-        tinycomments_mode: "embedded",
-        tinycomments_author: "Author name",
-        mergetags_list: [
-          { value: "First.Name", title: "First Name" },
-          { value: "Email", title: "Email" },
-        ],
-      });
-    </script>
-    <script>
-      let x = document.getElementById("mce_0_ifr");
-      if (x != null) {
-        alert(x);
-      }
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: Arial, sans-serif;
+  }
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+</style>
 
-      console.log(x, 100);
-    </script>
-  </body>
-</html>
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Price (R)</th>
+      <th>10 People (R)</th>
+      <th>20 People (R)</th>
+      <th>30 People (R)</th>
+      <th>40 People (R)</th>
+      <th>50 People (R)</th>
+      <th>60 People (R)</th>
+      <th>70 People (R)</th>
+      <th>80 People (R)</th>
+      <th>90 People (R)</th>
+      <th>100 People (R)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Chicken Biryani</td>
+      <td>60</td>
+      <td>600</td>
+      <td>1200</td>
+      <td>1800</td>
+      <td>2400</td>
+      <td>3000</td>
+      <td>3600</td>
+      <td>4200</td>
+      <td>4800</td>
+      <td>5400</td>
+      <td>6000</td>
+    </tr>
+    <tr>
+      <td>Mutton Biryani</td>
+      <td>80</td>
+      <td>800</td>
+      <td>1600</td>
+      <td>2400</td>
+      <td>3200</td>
+      <td>4000</td>
+      <td>4800</td>
+      <td>5600</td>
+      <td>6400</td>
+      <td>7200</td>
+      <td>8000</td>
+    </tr>
+    <tr>
+      <td>Beef Biryani</td>
+      <td>70</td>
+      <td>700</td>
+      <td>1400</td>
+      <td>2100</td>
+      <td>2800</td>
+      <td>3500</td>
+      <td>4200</td>
+      <td>4900</td>
+      <td>5600</td>
+      <td>6300</td>
+      <td>7000</td>
+    </tr>
+    <tr>
+      <td>Butter Chicken</td>
+      <td>75</td>
+      <td>750</td>
+      <td>1500</td>
+      <td>2250</td>
+      <td>3000</td>
+      <td>3750</td>
+      <td>4500</td>
+      <td>5250</td>
+      <td>6000</td>
+      <td>6750</td>
+      <td>7500</td>
+    </tr>
+    <tr>
+      <td>Chicken Curry</td>
+      <td>60</td>
+      <td>600</td>
+      <td>1200</td>
+      <td>1800</td>
+      <td>2400</td>
+      <td>3000</td>
+      <td>3600</td>
+      <td>4200</td>
+      <td>4800</td>
+      <td>5400</td>
+      <td>6000</td>
+    </tr>
+    <tr>
+      <td>Beef Curry</td>
+      <td>70</td>
+      <td>700</td>
+      <td>1400</td>
+      <td>2100</td>
+      <td>2800</td>
+      <td>3500</td>
+      <td>4200</td>
+      <td>4900</td>
+      <td>5600</td>
+      <td>6300</td>
+      <td>7000</td>
+    </tr>
+    <tr>
+      <td>Mutton Curry</td>
+      <td>80</td>
+      <td>800</td>
+      <td>1600</td>
+      <td>2400</td>
+      <td>3200</td>
+      <td>4000</td>
+      <td>4800</td>
+      <td>5600</td>
+      <td>6400</td>
+      <td>7200</td>
+      <td>8000</td>
+    </tr>
+    <tr>
+      <td>Braai Packs</td>
+      <td>120</td>
+      <td>1200</td>
+      <td>2400</td>
+      <td>3600</td>
+      <td>4800</td>
+      <td>6000</td>
+      <td>7200</td>
+      <td>8400</td>
+      <td>9600</td>
+      <td>10800</td>
+      <td>12000</td>
+    </tr>
+    <tr>
+      <td>Chicken Tikka</td>
+      <td>50</td>
+      <td>500</td>
+      <td>1000</td>
+      <td>1500</td>
+      <td>2000</td>
+      <td>2500</td>
+      <td>3000</td>
+      <td>3500</td>
+      <td>4000</td>
+      <td>4500</td>
+      <td>5000</td>
+    </tr>
+  </tbody>
+</table>

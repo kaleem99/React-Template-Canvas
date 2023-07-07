@@ -1,7 +1,7 @@
 import finalExamWeekComp from "Components/CourseCompletionComp";
 import { useState } from "react";
 import ViewTemplate from "Components/ViewTemplate";
-
+import Draggable from "react-draggable";
 const DragAndDrop = () => {
   const [items, setItems] = useState([
     { id: 1, item1: "Item 1", name: "Item 1" },
@@ -61,6 +61,9 @@ const DragAndDrop = () => {
 
 function FinalExamWeek({ courseSection, view, state, setState }) {
   const [banner, setBanner] = useState("");
+  const [popup, setPopup] = useState(false);
+  const [hyperLink, setHyperLink] = useState(false);
+  const [option, setOption] = useState("Text");
   const placeholders = [
     "Next Steps text",
     "reminders and suggestions",
@@ -88,9 +91,91 @@ function FinalExamWeek({ courseSection, view, state, setState }) {
     );
     // localStorage.setItem("html", JSON.stringify({ text: result }));
   };
+  const handleChangeOption = (e) => {
+    setOption(e.target.value);
+    if (e.target.value === "HyperLink") {
+      setHyperLink(true);
+    } else {
+      setHyperLink(false);
+      setState((prevState) => ({
+        ...prevState,
+        urlLink: "",
+      }));
+    }
+  };
   if (!view) {
     return (
       <>
+        {popup && (
+          <Draggable>
+            <div
+              style={{
+                width: 300,
+                height: "auto" /* border: '1px solid', */,
+                position: "absolute",
+                background: "white",
+                boxShadow:
+                  "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                fontSize: "larger",
+                padding: 10,
+                borderRadius: 10,
+                top: "40%",
+                right: "40%",
+              }}
+              id="DivA"
+              className="None"
+            >
+              <img
+                alt=""
+                width="28px"
+                height="28px"
+                style={{ position: "absolute", right: 2, top: 2 }}
+                src="https://kaleem99.github.io/hostingContents/remove-button.png"
+                onClick={() => setPopup(false)}
+              />
+              <h3 style={{ marginTop: 0 }}>Choose Text Or HyperLink</h3>
+
+              <form>
+                <input
+                  onChange={(e) => handleChangeOption(e)}
+                  type="radio"
+                  id="Bold"
+                  name="radio"
+                  checked={option === "Text"}
+                  value="Text"
+                />
+                <label htmlFor="Text">Normal Text</label>
+                <br />
+                <input
+                  type="radio"
+                  id="Italic"
+                  name="radio"
+                  checked={option === "HyperLink"}
+                  value="HyperLink"
+                  onChange={(e) => handleChangeOption(e)}
+                />
+                <label htmlFor="HyperLink">HyperLink</label>
+
+                <br></br>
+                <br></br>
+                {hyperLink && (
+                  <>
+                    <label>Add Hyper Link Url</label>
+                    <br></br>
+                    <input
+                      type="url"
+                      name="urlLink"
+                      value={state.urlLink}
+                      onChange={handleChange}
+                      placeholder="Link URL"
+                    />
+                  </>
+                )}
+              </form>
+              <br />
+            </div>
+          </Draggable>
+        )}
         <div
           style={{
             width: "90%",
@@ -145,6 +230,7 @@ function FinalExamWeek({ courseSection, view, state, setState }) {
                 className="input2"
                 placeholder="[EXEC ED COURSE TITLE]"
                 onChange={handleChange}
+                onDoubleClick={() => (popup ? setPopup(false) : setPopup(true))}
               />
             </div>
             <div style={{ width: "450px", height: "auto" }}>

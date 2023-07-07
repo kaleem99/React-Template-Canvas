@@ -190,12 +190,17 @@ function WelcomePage({ courseSection, view, setState, state }) {
           <p>
             If you are new to the edX platform, we recommend reviewing the
             resources in{" "}
-            <a href="https://www.google.com/url?q=https://www.edx.org/course/demox&sa=D&source=docs&ust=1685961469814455&usg=AOvVaw1S5GSUAC2YK9XZjaaZRoTV">
+            <a
+              href="https://www.google.com/url?q=https://www.edx.org/course/demox&sa=D&source=docs&ust=1685961469814455&usg=AOvVaw1S5GSUAC2YK9XZjaaZRoTV"
+              target="_blank"
+            >
               DemoX
             </a>
             . You can reach our technical support team via the{" "}
-            <a href="https://support.edx.org/hc/en-us">Help</a> link in the
-            upper right corner of any page.
+            <a href="https://support.edx.org/hc/en-us" target="_blank">
+              Help
+            </a>{" "}
+            link in the upper right corner of any page.
           </p>
         </div>
         {/* <button

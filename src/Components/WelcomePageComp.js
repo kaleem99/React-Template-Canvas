@@ -36,11 +36,11 @@ const courseOverviewComp = (state) => {
   <p>
     If you are new to the edX platform, we recommend reviewing the
     resources in
-    <a style="color: rgb(17, 85, 204);" href="https://www.google.com/url?q=https://www.edx.org/course/demox&sa=D&source=docs&ust=1685961469814455&usg=AOvVaw1S5GSUAC2YK9XZjaaZRoTV">
+    <a style="color: rgb(17, 85, 204);" href="https://www.google.com/url?q=https://www.edx.org/course/demox&sa=D&source=docs&ust=1685961469814455&usg=AOvVaw1S5GSUAC2YK9XZjaaZRoTV" target="_blank">
       DemoX
     </a>
     .<br> You can reach our technical support team via the
-    <a style="color: rgb(17, 85, 204);" href="https://support.edx.org/hc/en-us">Help</a> link in the
+    <a style="color: rgb(17, 85, 204);" href="https://support.edx.org/hc/en-us" target="_blank">Help</a> link in the
     upper right corner of any page.
   </p>
 </div>`;
